@@ -1,86 +1,44 @@
 import { Component } from '@angular/core';
 import { Exercise } from './exercise';
 
-const exercises: Exercise[] = [
-  { level: 11, progression: 'planche', name: 'Mr. Nice' },
-  { level: 12, progression: 'planche', name: 'Narco' },
-  { level: 13, progression: 'planche', name: 'Bombasto' },
-  { level: 14, progression: 'planche', name: 'Celeritas' },
-  { level: 15, progression: 'planche', name: 'Magneta' },
-  { level: 16, progression: 'planche', name: 'RubberMan' },
-  { level: 17, progression: 'planche', name: 'Dynama' },
-  { level: 18, progression: 'planche', name: 'Dr IQ' },
-  { level: 19, progression: 'planche', name: 'Magma' },
-  { level: 20, progression: 'planche', name: 'Tornado' }
+const EXERCISES_HSPUSHUPS: Exercise[] = [
+  { level: 1, progression: 'hsPushups', name: 'Pike HeSPU', prerequisites: [] },
+  { level: 2, progression: 'hsPushups', name: 'Box HeSPU', prerequisites: ['hsPushups_1'] },
+  { level: 3, progression: 'hsPushups', name: 'Wall HeSPU Ecc', prerequisites: ['hsPushups_2'] },
+  { level: 4, progression: 'hsPushups', name: 'Wall HeSPU', prerequisites: ['hsPushups_3'] },
+  { level: 5, progression: 'hsPushups', name: 'Wall HSPU', prerequisites: ['hsPushups_4'] },
+  { level: 6, progression: 'hsPushups', name: 'Free HeSPU', prerequisites: ['hsPushups_5'] },
+  { level: 7, progression: 'hsPushups', name: 'Free HSPU', prerequisites: ['hsPushups_6'] }
+];
+
+const EXERCISES_RINGSHS: Exercise[] = [
+  { level: 5, progression: 'ringsHS', name: 'R Shld Std', prerequisites: ['hsPushups_5'] },
+  { level: 6, progression: 'ringsHS', name: 'R Strap HS', prerequisites: ['ringsHS_5'] },
+  { level: 7, progression: 'ringsHS', name: 'R HS', prerequisites: ['ringsHS_6'] }
+];
+
+const EXERCISES_MANNA: Exercise[] = [
+  { level: 1, progression: 'manna', name: 'Tuck L-sit', prerequisites: [] },
+  { level: 2, progression: 'manna', name: '1 Leg Bent L-sit', prerequisites: ['manna_1'] },
+  { level: 3, progression: 'manna', name: 'L-sit', prerequisites: ['manna_2'] },
+  { level: 4, progression: 'manna', name: 'Straddle L-sit', prerequisites: ['manna_3'] }
+];
+
+const EXERCISES = [
+  { progression: 'manna', exercises: EXERCISES_MANNA },
+  { progression: 'ringshs', exercises: EXERCISES_RINGSHS },
+  { progression: 'hspushups', exercises: EXERCISES_HSPUSHUPS }
 ];
 
 @Component({
   selector: 'my-app',
-  template: `
-	  <h1>{{title}}</h1>
-	  <ul class="exercises">
-	    <li *ngFor="let exercise of exercises"
-	      [class.selected]="exercise === selectedExercise"
-	      (click)="onSelect(exercise)">
-	      <span class="badge">{{exercise.level}}</span> {{exercise.name}}
-	    </li>
-	  </ul>
-	  <exercise-detail [exercise]="selectedExercise"></exercise-detail>
-  	`,
-  styles: [`
-	  .selected {
-	    background-color: #CFD8DC !important;
-	    color: white;
-	  }
-	  .exercises {
-	    margin: 0 0 2em 0;
-	    list-style-type: none;
-	    padding: 0;
-	    width: 15em;
-	  }
-	  .exercises li {
-	    cursor: pointer;
-	    position: relative;
-	    left: 0;
-	    background-color: #EEE;
-	    margin: .5em;
-	    padding: .3em 0;
-	    height: 1.6em;
-	    border-radius: 4px;
-	  }
-	  .exercises li.selected:hover {
-	    background-color: #BBD8DC !important;
-	    color: white;
-	  }
-	  .exercises li:hover {
-	    color: #607D8B;
-	    background-color: #DDD;
-	    left: .1em;
-	  }
-	  .exercises .text {
-	    position: relative;
-	    top: -3px;
-	  }
-	  .exercises .badge {
-	    display: inline-block;
-	    font-size: small;
-	    color: white;
-	    padding: 0.8em 0.7em 0 0.7em;
-	    background-color: #607D8B;
-	    line-height: 1em;
-	    position: relative;
-	    left: -1px;
-	    top: -4px;
-	    height: 1.8em;
-	    margin-right: .8em;
-	    border-radius: 4px 0 0 4px;
-	  }
-	`]
+  templateUrl: 'app/app.component.html',
+  styleUrls: ['app/app.component.css']
 })
 
 export class AppComponent {
-  title = 'Tour of exercises';
-  exercises = exercises;
+  title = 'Bodyweight exercises';
+  exerciseLists = EXERCISES;
   selectedExercise: Exercise;
   onSelect(exercise: Exercise): void {
 	  this.selectedExercise = exercise;

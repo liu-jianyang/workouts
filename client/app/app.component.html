@@ -1,0 +1,10 @@
+<h1>{{title}}</h1>
+<ul class="exercises" *ngFor="let exerciseList of exerciseLists">
+{{exerciseList.progression}}:
+	<li *ngFor="let exercise of exerciseList.exercises"
+	  [class.selected]="exercise === selectedExercise"
+	  (click)="onSelect(exercise)">
+	  <span class="badge">{{exercise.level}}</span> {{exercise.name}}
+	</li>
+</ul>
+<exercise-detail [exercise]="selectedExercise"></exercise-detail>
