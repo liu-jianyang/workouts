@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <ul class="exercises" *ngFor="let exerciseList of exerciseLists">
-{{exerciseList.progression}}:
+{{exerciseList.name}}:
 	<li *ngFor="let exercise of exerciseList.exercises"
 	  [class.selected]="exercise === selectedExercise"
 	  (click)="onSelect(exercise)">

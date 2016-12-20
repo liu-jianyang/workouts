@@ -25,9 +25,9 @@ const EXERCISES_MANNA: Exercise[] = [
 ];
 
 const EXERCISES = [
-  { progression: 'manna', exercises: EXERCISES_MANNA },
-  { progression: 'ringshs', exercises: EXERCISES_RINGSHS },
-  { progression: 'hspushups', exercises: EXERCISES_HSPUSHUPS }
+  { progression: 'manna', name: 'Manna', exercises: EXERCISES_MANNA },
+  { progression: 'ringshs', name: 'Rings Handstand', exercises: EXERCISES_RINGSHS },
+  { progression: 'hspushups', name: 'Handstand Pushups', exercises: EXERCISES_HSPUSHUPS }
 ];
 
 @Component({
