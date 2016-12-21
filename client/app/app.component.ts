@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Exercise } from './exercise';
+import { ExerciseComponent } from './exercise.component';
 
 const EXERCISES_HSPUSHUPS: Exercise[] = [
   { level: 1, progression: 'hsPushups', name: 'Pike HeSPU', prerequisites: [] },
@@ -41,6 +42,7 @@ export class AppComponent {
   exerciseLists = EXERCISES;
   selectedExercise: Exercise;
   onSelect(exercise: Exercise): void {
+    // console.log('hi');
 	  this.selectedExercise = exercise;
 	}
 }

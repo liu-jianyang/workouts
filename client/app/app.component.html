@@ -1,10 +1,16 @@
 <h1>{{title}}</h1>
+<md-grid-list cols="4" [style.background]="'lightblue'">
+   <md-grid-tile>One</md-grid-tile>
+   <md-grid-tile>Two</md-grid-tile>
+   <md-grid-tile>Three</md-grid-tile>
+   <md-grid-tile>Four</md-grid-tile>
+</md-grid-list>
 <ul class="exercises" *ngFor="let exerciseList of exerciseLists">
 {{exerciseList.name}}:
 	<li *ngFor="let exercise of exerciseList.exercises"
-	  [class.selected]="exercise === selectedExercise"
-	  (click)="onSelect(exercise)">
-	  <span class="badge">{{exercise.level}}</span> {{exercise.name}}
+      (click)="onSelect()">
+    <exercise-component [exercise]="exercise"></exercise-component>
+    }
 	</li>
 </ul>
 <exercise-detail [exercise]="selectedExercise"></exercise-detail>
