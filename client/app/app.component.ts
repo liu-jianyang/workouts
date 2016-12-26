@@ -37,9 +37,7 @@ const EXERCISES = [
 
 function convertToViewFormat(levels, exerciseLists) {
   var listOfLists = [];
-  const emptyExercise = {
-    id: 'empty'
-  }
+
   for (let i = 0; i < levels.length; i++) {
     var level = {
       level: levels[i],
@@ -51,12 +49,14 @@ function convertToViewFormat(levels, exerciseLists) {
       if (list[i + 1]) {
         row.push(list[i+1]);
       } else {
-        var exercise = Object.create(emptyExercise);
-        exercise['level'] = i;
+        var exercise = {
+          id: 'empty'
+        };
         row.push(exercise);
       }
       
     }
+
     listOfLists.push(row);
   }
   console.log('list:', listOfLists);

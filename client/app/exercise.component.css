@@ -1,0 +1,15 @@
+.exercise {
+  background-color: #EEE;
+  padding: .3em;
+  height: 1.6em;
+  border-radius: 4px;
+}
+.exercise.selected:hover {
+  background-color: #BBD8DC !important;
+  color: white;
+}
+.exercise:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  text-decoration: none;
+}
