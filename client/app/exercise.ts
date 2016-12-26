@@ -1,6 +1,6 @@
 export class Exercise {
+  id: string;
   name: string;
   progression: string;
-  level: number;
   prerequisites: Array<string>;
 }

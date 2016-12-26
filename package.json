@@ -23,14 +23,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "a2-in-memory-web-api": "^0.1.15",
     "angular2": "2.0.0-beta.15",
-    "systemjs": "0.19.26",
     "es6-shim": "^0.35.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.10",
-
-    "a2-in-memory-web-api": "^0.1.15"
+    "systemjs": "0.19.26",
+    "zone.js": "0.6.10"
   },
   "devDependencies": {
     "canonical-path": "0.0.2",
@@ -46,10 +45,10 @@
     "protractor": "^3.2.2",
     "rimraf": "^2.5.2",
     "typescript": "^1.8.10",
-    "typings":"^0.7.12",
-    "gulp" : "3.9.1",
+    "typings": "^0.7.12",
+    "gulp": "3.9.1",
     "gulp-sourcemaps": "2.0.0-alpha",
-    "del" : "2.2.0"
+    "del": "2.2.0"
   },
-  "repository": {  }
+  "repository": {}
 }
