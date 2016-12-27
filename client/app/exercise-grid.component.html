@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row" *ngFor="let row of exerciseLists" style="margin-bottom: 20px;">
+    <div *ngFor="let element of row" >
+      <div class="col-md-1 text-right" *ngIf="element.type === 'level'">
+        {{element.level}}
+      </div>
+      <exercise-component id="{{element.id}}" class="col-md-3 text-center" *ngIf="!element.type" [exercise]="element"></exercise-component>
+    </div>
+  </div>
+</div>

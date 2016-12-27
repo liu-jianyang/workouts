@@ -1,3 +1,7 @@
-<a class="exercise" *ngIf="exercise.id !== 'empty'">
+<template #tipContent>
+  <b *ngFor="let prerequisite of exercise.prerequisites">{{prerequisite}}</b>
+</template>
+<a class="exercise" *ngIf="exercise.id !== 'empty'" [ngbTooltip]="tipContent" (mouseup)="onClick($event)" oncontextmenu="return false">
   <span class="badge">{{exercise.level}}</span> {{exercise.name}}
+  <span>{{exercise.currentPoints}} / {{exercise.maxPoints}}</span>
 </a>
