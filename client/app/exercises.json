@@ -1,0 +1,106 @@
+{
+  "hsPushups": [
+    { 
+      "id": "hsPushups_1", 
+      "progression": "hspushups", 
+      "level": 1, 
+      "name": "Pike HeSPU", 
+      "prerequisites": [] 
+    },
+    { 
+      "id": "hsPushups_2", 
+      "progression": "hspushups", 
+      "level": 2, 
+      "name": "Box HeSPU", 
+      "prerequisites": ["hsPushups_1"] 
+    },
+    { 
+      "id": "hsPushups_3", 
+      "progression": "hspushups", 
+      "level": 3, 
+      "name": "Wall HeSPU Ecc", 
+      "prerequisites": ["hsPushups_2"] 
+    },
+    { 
+      "id": "hsPushups_4", 
+      "progression": "hspushups", 
+      "level": 4, 
+      "name": "Wall HeSPU", 
+      "prerequisites": ["hsPushups_3"] 
+    },
+    { 
+      "id": "hsPushups_5", 
+      "progression": "hspushups", 
+      "level": 5, 
+      "name": "Wall HSPU", 
+      "prerequisites": ["hsPushups_4"] 
+    },
+    { 
+      "id": "hsPushups_6", 
+      "progression": "hspushups", 
+      "level": 6, 
+      "name": "Free HeSPU", 
+      "prerequisites": ["hsPushups_5"] 
+    },
+    { 
+      "id": "hsPushups_7", 
+      "progression": "hspushups", 
+      "level": 7, 
+      "name": "Free HSPU", 
+      "prerequisites": ["hsPushups_6"] 
+    }
+  ],
+  "ringsHS": [
+    { 
+      "id": "ringsHS_5", 
+      "progression": "ringsHS", 
+      "level": 5, 
+      "name": "R Shld Std", 
+      "prerequisites": ["hsPushups_5"] 
+    },
+    { 
+      "id": "ringsHS_6", 
+      "progression": "ringsHS", 
+      "level": 6, 
+      "name": "R Strap HS", 
+      "prerequisites": ["ringsHS_5"] 
+    },
+    { 
+      "id": "ringsHS_7", 
+      "progression": "ringsHS", 
+      "level": 7, 
+      "name": "R HS", 
+      "prerequisites": ["ringsHS_6"] 
+    }
+  ],
+  "manna": [
+    { 
+      "id": "manna_1", 
+      "progression": "manna", 
+      "level": 1, 
+      "name": "Tuck L-sit", 
+      "prerequisites": [] 
+    },
+    { 
+      "id": "manna_2", 
+      "progression": "manna", 
+      "level": 2, 
+      "name": "1 Leg Bent L-sit", 
+      "prerequisites": ["manna_1"] 
+    },
+    { 
+      "id": "manna_3", 
+      "progression": "manna", 
+      "level": 3, 
+      "name": "L-sit", 
+      "prerequisites": ["manna_2"] 
+    },
+    { 
+      "id": "manna_4", 
+      "progression": "manna", 
+      "level": 4, 
+      "name": "Straddle L-sit", 
+      "prerequisites": ["manna_3"] 
+    }
+  ]
+}

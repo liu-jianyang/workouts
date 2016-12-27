@@ -1,20 +1,4 @@
 <h1>{{title}}</h1>
-<div class="container">
-  <div class="row" *ngFor="let row of exerciseLists">
-    <div *ngFor="let element of row" >
-      <div class="col-md-1" *ngIf="element.type === 'level'">
-        {{element.level}}
-      </div>
-      <exercise-component class="col-md-3" *ngIf="!element.type" [exercise]="element"></exercise-component>
-    </div>
-  </div>
-<!--   <h3>{{exerciseList.name}}, {{exerciseList.exercises.length}}</h3>
-  <ul class="exercises">
-    <li *ngFor="let exercise of exerciseList.exercises"
-    (click)="onSelect()">
-      <exercise-component [exercise]="exercise"></exercise-component>
-    </li>
-  </ul> -->
-</div>
 
+<exercise-grid></exercise-grid>
 <exercise-detail [exercise]="selectedExercise"></exercise-detail>
