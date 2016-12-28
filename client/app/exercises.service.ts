@@ -8,6 +8,7 @@ const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 function convertToViewFormat(exercisesObj) {
   var listOfLists = [];
   let exerciseLists = {};
+
   _.each(exercisesObj, function(list, nameOfList) {
     let newExerciseList = {};
     _.each(list, function(exercise) {
@@ -41,7 +42,6 @@ function convertToViewFormat(exercisesObj) {
 
     listOfLists.push(row);
   }
-  console.log('list:', listOfLists);
   return listOfLists;
 }
 

@@ -6,7 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['app/exercise.component.css']
 })
 
-
 export class ExerciseComponent {
   private _exercise = {};
   private _prereqs = [];
@@ -64,5 +63,5 @@ export class ExerciseComponent {
   checkPrereqsComplete() {
     let sum = _.reduce(this._prereqs, function(memo, prereq){ return memo + prereq.currentPoints; }, 0);
     this.canStartExercise = (sum === this.total) ? true : false;
-  }
+  };
 }

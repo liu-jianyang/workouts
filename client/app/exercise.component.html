@@ -2,8 +2,8 @@
   <a *ngFor="let prereq of exercise.prerequisites">
     <span [ngClass]="{'prereq-completed': prereq.currentPoints === prereq.maxPoints }">{{prereq.name}}</span>
   </a>
-  
 </template>
+
 <a class="exercise unselectable" 
    *ngIf="exercise.id !== 'empty'"
    [ngbTooltip]="tipContent" 
