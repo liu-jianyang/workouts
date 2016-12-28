@@ -7,13 +7,13 @@ const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 function convertToViewFormat(exercisesObj) {
   var listOfLists = [];
-  let exerciseLists = [];
+  let exerciseLists = {};
   _.each(exercisesObj, function(list, nameOfList) {
     let newExerciseList = {};
     _.each(list, function(exercise) {
       newExerciseList[exercise.level] = exercise;
     })
-    exerciseLists.push(newExerciseList);
+    exerciseLists[nameOfList] = newExerciseList;
   });
 
   for (let i = 0; i < LEVELS.length; i++) {
@@ -22,21 +22,26 @@ function convertToViewFormat(exercisesObj) {
       type: 'level'
     }
     var row = [level];
-    for (let j = 0; j < exerciseLists.length; j++) {
-      var list = exerciseLists[j];
+    _.each(exerciseLists, function(list, nameOfList) {
       if (list[i + 1]) {
-        row.push(list[i+1]);
+        let exercise = list[i+1];
+        //replace string prerequisite with actual element
+        exercise.prerequisites = _.map(exercise.prerequisites, function(prerequisite) {
+          let array = prerequisite.split('_');
+          return exerciseLists[array[0]][array[1]];
+        });
+        row.push(exercise);
       } else {
         var exercise = {
           id: 'empty'
         };
         row.push(exercise);
       }
-      
-    }
+    });
 
     listOfLists.push(row);
   }
+  console.log('list:', listOfLists);
   return listOfLists;
 }
 

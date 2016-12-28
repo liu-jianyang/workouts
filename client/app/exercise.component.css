@@ -3,13 +3,39 @@
   padding: .3em;
   height: 1.6em;
   border-radius: 4px;
+  text-decoration: none;
 }
+
+.exercise-completed {
+  background-color: #EEE;
+  padding: .3em;
+  height: 1.6em;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: yellow;
+}
+
 .exercise.selected:hover {
   background-color: #BBD8DC !important;
   color: white;
 }
-.exercise:hover {
+
+.exercise:hover:not(.disabled) {
   color: #607D8B;
   background-color: #DDD;
-  text-decoration: none;
+}
+
+.prereq-completed {
+  color: yellow;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
 }
