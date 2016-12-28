@@ -2,49 +2,49 @@
   "hsPushups": [
     { 
       "id": "hsPushups_1", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 1, 
       "name": "Pike HeSPU", 
       "prerequisites": [] 
     },
     { 
       "id": "hsPushups_2", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 2, 
       "name": "Box HeSPU", 
       "prerequisites": ["hsPushups_1"] 
     },
     { 
       "id": "hsPushups_3", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 3, 
       "name": "Wall HeSPU Ecc", 
       "prerequisites": ["hsPushups_2"] 
     },
     { 
       "id": "hsPushups_4", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 4, 
       "name": "Wall HeSPU", 
       "prerequisites": ["hsPushups_3"] 
     },
     { 
       "id": "hsPushups_5", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 5, 
       "name": "Wall HSPU", 
       "prerequisites": ["hsPushups_4"] 
     },
     { 
       "id": "hsPushups_6", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 6, 
       "name": "Free HeSPU", 
       "prerequisites": ["hsPushups_5"] 
     },
     { 
       "id": "hsPushups_7", 
-      "progression": "hspushups", 
+      "progression": "hsPushups", 
       "level": 7, 
       "name": "Free HSPU", 
       "prerequisites": ["hsPushups_6"] 
