@@ -35,9 +35,10 @@ export class ExerciseComponent {
     }
   }
 
+  @Input() title: string;
+
   ngDoCheck() {
     if (this._prereqs.length > 0 && JSON.stringify(this._prereqs) !== this.oldPoints) {
-      console.log('checked:', this._prereqs);
       this.checkPrereqsComplete();
       this.oldPoints = JSON.stringify(this._prereqs);
     }
