@@ -13,7 +13,11 @@ export class NameMappingService {
   }
   private extractData(res: Response) {
     let body = res.json();
-    return body || { };
+    let data = {};
+    body.nameMapping.forEach(function(ele) {
+      data[ele.key] = ele.value;
+    });
+    return data || { };
   }
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

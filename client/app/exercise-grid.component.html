@@ -5,9 +5,10 @@
         {{element.level}}
       </div>
       <exercise-component id="{{element.id}}" 
-                          class="col-md-3 text-center" 
+                          class="col-md-3" 
                           *ngIf="!element.type" 
-                          [exercise]="element" 
+                          [exercise]="element"
+                          [title]="nameMapping[element.progression]"
                           [prereqs]="element.prerequisites"></exercise-component>
 
     </div>

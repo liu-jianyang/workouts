@@ -3,13 +3,15 @@
     <span [ngClass]="{'prereq-completed': prereq.currentPoints === prereq.maxPoints }">{{prereq.name}}</span>
   </a>
 </template>
-
-<a class="exercise unselectable" 
-   *ngIf="exercise.id !== 'empty'"
-   [ngbTooltip]="tipContent" 
-   [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise }"
-   (mouseup)="onClick($event)"
-   oncontextmenu="return false">
-  <span class="badge">{{exercise.level}}</span> {{exercise.name}}
-  <span>{{exercise.currentPoints}} / {{exercise.maxPoints}}</span>
-</a>
+<div class="exercise unselectable"
+     [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise }"
+     *ngIf="exercise.id !== 'empty'"
+     [ngbTooltip]="tipContent"
+     (mouseup)="onClick($event)"
+      oncontextmenu="return false">
+  <div class="header"><span class="title-box">{{title}}</span></div>
+  <div>
+    <span class="badge">{{exercise.level}}</span> {{exercise.name}}
+  </div>
+  <div class="footer"><span class="title-box">{{exercise.currentPoints}} / {{exercise.maxPoints}}</span></div>
+</div>

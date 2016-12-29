@@ -8,12 +8,13 @@ const LEVELS: Number[] = [
 
 @Component({
   selector: 'exercise-grid',
-  templateUrl: 'app/exercise-grid.component.html'
+  templateUrl: 'app/exercise-grid.component.html',
+  styleUrls: ['app/exercise-grid.component.css']
 })
 
 export class ExerciseGridComponent {
   exerciseLists: any[];
-  nameMapping: any[];
+  nameMapping = {};
   errorMessage: string;
   mode = 'Observable';
   constructor (private exercisesService: ExercisesService, private nameMappingService: NameMappingService) {};
