@@ -5,16 +5,18 @@ import * as _ from 'underscore';
 
 const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-function convertToViewFormat(exercisesObj) {
+function convertToViewFormat(exercisesArray) {
   var listOfLists = [];
   let exerciseLists = {};
 
-  _.each(exercisesObj, function(list, nameOfList) {
-    let newExerciseList = {};
-    _.each(list, function(exercise) {
-      newExerciseList[exercise.level] = exercise;
-    })
-    exerciseLists[nameOfList] = newExerciseList;
+  _.each(exercisesArray, function(exercise) {
+    var progression = exercise.progression;
+    exercise.id = exercise.eid;
+    exercise.prerequisites = exercise.prerequisites ? exercise.prerequisites.split(',') : [];
+    if (!exerciseLists[progression]) {
+      exerciseLists[progression] = {};
+    }
+    exerciseLists[progression][exercise.level] = exercise;
   });
 
   for (let i = 0; i < LEVELS.length; i++) {
@@ -47,7 +49,7 @@ function convertToViewFormat(exercisesObj) {
 
 @Injectable()
 export class ExercisesService {
-  private url = 'app/exercises.json';
+  private url = 'api/exercises';
   constructor (private http: Http) {}
   getExercises (): Observable<any[]> {
     return this.http.get(this.url)
@@ -55,10 +57,12 @@ export class ExercisesService {
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
+    console.log('res:', res);
     let body = res.json();
     return convertToViewFormat(body) || { };
   }
   private handleError (error: Response | any) {
+    console.log('err:', error);
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {

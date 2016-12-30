@@ -4,7 +4,7 @@ import { Observable }     from 'rxjs/Rx';
 
 @Injectable()
 export class NameMappingService {
-  private url = 'app/name-mapping.json';
+  private url = 'api/name-mapping';
   constructor (private http: Http) {}
   getNameMapping (): Observable<any[]> {
     return this.http.get(this.url)
