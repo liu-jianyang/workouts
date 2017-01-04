@@ -1,16 +1,14 @@
-{
-  "nameMapping": [
-    {
-      "key": "hsPushups",
-      "value": "Handstand Pushups"
-    },
-    {
-      "key": "ringsHS",
-      "value": "Ring Handstand"
-    },
-    {
-      "key": "manna",
-      "value": "Manna"
-    }
-  ]
-}
+[
+  {
+    "key": "hsPushups",
+    "value": "Handstand Pushups"
+  },
+  {
+    "key": "ringsHS",
+    "value": "Ring Handstand"
+  },
+  {
+    "key": "manna",
+    "value": "Manna"
+  }
+]

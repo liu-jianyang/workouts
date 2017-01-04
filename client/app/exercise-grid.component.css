@@ -6,3 +6,35 @@
     border-left: 1px solid #d7d7d7;
     margin-left: -1px;
 }
+
+.outer-row {
+  min-height: 80px;
+  width: 100%;
+}
+
+.clear-sides {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px; 
+}
+
+.col {
+  width: 200px;
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px;
+  float: left;
+  z-index: 2;
+}
+
+.grid-container {
+  padding-top: 20px;
+  width: 7000px;
+  /*background-color: #ADD8E6;*/
+  z-index: 0;
+}
+
+body {
+  overflow:hidden;
+}
