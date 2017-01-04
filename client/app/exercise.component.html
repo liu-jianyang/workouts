@@ -7,6 +7,7 @@
 <div class="exercise unselectable"
      [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise, 'hide-element': exercise.id === 'empty'}"
      [ngbTooltip]="tipContent"
+     oncontextmenu="return false"
      (mouseup)="onClick($event)">
   <div class="header"><span class="title-box">{{title}}</span></div>
   <div>
