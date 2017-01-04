@@ -1,11 +1,21 @@
-<div class="container">
-  <div class="row" *ngFor="let row of exerciseLists" style="margin-bottom: 20px;">
+<div class="grid-container" id="gridContainer">
+  <div id="svgContainer" style="position: absolute;">
+    <svg id="svg" width="0" height="0" >
+      <path
+        id="path"
+        d="M0 0"         
+        stroke="#000" 
+        fill="none" 
+        stroke-width="5px"/>
+    </svg>
+  </div>
+  <div class="outer-row " *ngFor="let row of exerciseLists" style="margin-bottom: 20px;">
     <div *ngFor="let element of row" >
-      <div class="col-md-1 text-right" *ngIf="element.type === 'level'">
+      <div class="col-1" *ngIf="element.type === 'level'">
         {{element.level}}
       </div>
       <exercise-component id="{{element.id}}" 
-                          class="col-md-1" 
+                          class="col"
                           *ngIf="!element.type" 
                           [exercise]="element"
                           [title]="nameMapping[element.progression]"
@@ -13,4 +23,5 @@
 
     </div>
   </div>
+
 </div>

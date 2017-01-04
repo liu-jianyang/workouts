@@ -2,13 +2,13 @@
   <a *ngFor="let prereq of exercise.prerequisites">
     <span [ngClass]="{'prereq-completed': prereq.currentPoints === prereq.maxPoints }">{{prereq.name}}</span>
   </a>
+  
 </template>
 <div class="exercise unselectable"
-     [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise }"
-     *ngIf="exercise.id !== 'empty'"
+     [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise, 'hide-element': exercise.id === 'empty'}"
      [ngbTooltip]="tipContent"
-     (mouseup)="onClick($event)"
-      oncontextmenu="return false">
+     oncontextmenu="return false"
+     (mouseup)="onClick($event)">
   <div class="header"><span class="title-box">{{title}}</span></div>
   <div>
     <span class="badge">{{exercise.level}}</span> {{exercise.name}}

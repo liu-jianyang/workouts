@@ -5,6 +5,7 @@ import { Observable }     from 'rxjs/Rx';
 @Injectable()
 export class NameMappingService {
   private url = 'api/name-mapping';
+  // url = 'app/name-mapping.json';
   constructor (private http: Http) {}
   getNameMapping (): Observable<any[]> {
     return this.http.get(this.url)
@@ -14,7 +15,7 @@ export class NameMappingService {
   private extractData(res: Response) {
     let body = res.json();
     let data = {};
-    body.nameMapping.forEach(function(ele) {
+    body.forEach(function(ele) {
       data[ele.key] = ele.value;
     });
     return data || { };

@@ -6,6 +6,13 @@ const LEVELS: Number[] = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
 ]
 
+function resetSvg() {
+  // reset svg each time 
+  let svg = document.querySelector('#svg');
+  svg.setAttribute('height', '0');
+  svg.setAttribute('width', '0');
+}
+
 @Component({
   selector: 'exercise-grid',
   templateUrl: 'app/exercise-grid.component.html',
@@ -18,10 +25,12 @@ export class ExerciseGridComponent {
   errorMessage: string;
   mode = 'Observable';
   constructor (private exercisesService: ExercisesService, private nameMappingService: NameMappingService) {};
-  ngOnInit() { 
+  ngOnInit() {
     this.getExercises();
     this.getNameMapping();
+    resetSvg();
   };
+
   getExercises() {
     this.exercisesService.getExercises()
       .subscribe(
