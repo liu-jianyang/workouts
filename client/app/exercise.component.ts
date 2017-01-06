@@ -20,12 +20,12 @@ function drawPath(svg, path, startX, startY, endX, endY) {
                             ' L' + endX + ' ' + endY );
 }
 
-function connectElements(startElem, endElem, counter) {
+function connectElements(exercise, startElem, endElem) {
   var svgContainer = document.getElementById('svgContainer');
   var svg = document.getElementById('svg');
   var path = document.getElementById('path');
   var newPath = path.cloneNode(true);
-  newPath.id = 'path_' + counter;
+  newPath.id = 'path';
   svg.appendChild(newPath);
 
   // if first element is lower than the second, swap!
@@ -34,6 +34,8 @@ function connectElements(startElem, endElem, counter) {
       startElem = endElem;
       endElem = temp;
   }
+
+  exercise.paths.push({path: newPath, startElem: startElem});
 
   // get (top, left) corner coordinates of the svg container   
   var svgTop  = svgContainer.offsetTop;
@@ -55,12 +57,12 @@ function connectElements(startElem, endElem, counter) {
 
 
 
-function drawConnectors(exercise, exercisesToConnect, counter) {
-  var element = document.getElementById(exercise);
+function drawConnectors(exercise, exercisesToConnect) {
+  var element = document.getElementById(exercise.id);
   // connect all the paths you want!
   exercisesToConnect.forEach(function(e) {
     let elementToConnect = document.getElementById(e);
-    connectElements(elementToConnect, element, counter++);
+    connectElements(exercise, elementToConnect, element);
   });
 }
 
@@ -78,13 +80,13 @@ export class ExerciseComponent {
   private canStartExercise = false;
   private total = 0;
   private hasDrawnLines = false;
-  private counter = 0;
 
   @Input()
   set exercise(exercise) {
     this._exercise = exercise;
     this._exercise.maxPoints = 1;
     this._exercise.currentPoints = 0;
+    this._exercise.paths = [];
   };
 
   get exercise() { return this._exercise; };
@@ -105,7 +107,7 @@ export class ExerciseComponent {
 
   ngAfterViewInit() {
     if (this._prereqs.length > 0 && !this.hasDrawnLines) {
-      drawConnectors(this._exercise.id, _.pluck(this._prereqs, 'id'), this.counter);
+      drawConnectors(this._exercise, _.pluck(this._prereqs, 'id'));
       this.hasDrawnLines = true;
     }
   }
@@ -113,6 +115,7 @@ export class ExerciseComponent {
   ngDoCheck() {
     if (this._prereqs.length > 0 && JSON.stringify(this._prereqs) !== this.oldPoints) {
       this.checkPrereqsComplete();
+      this.updatePaths();
       this.oldPoints = JSON.stringify(this._prereqs);
     }
   }
@@ -134,10 +137,42 @@ export class ExerciseComponent {
     }
   };
 
+  onMouseOver() {
+    event.preventDefault();
+    this._exercise.paths.forEach(function(e) {
+      var path = e.path;
+      if (path.getAttribute('stroke') !== 'gold') {
+        path.setAttribute('stroke', 'yellow');
+      }
+    });
+  };
+
+  onMouseLeave() {
+    event.preventDefault();
+    this._exercise.paths.forEach(function(e) {
+      var path = e.path;
+      if (path.getAttribute('stroke') !== 'gold') {
+        path.setAttribute('stroke', 'black');
+      }
+    });
+  }
+
   checkPrereqsComplete() {
     let sum = _.reduce(this._prereqs, function(memo, prereq){ return memo + prereq.currentPoints; }, 0);
     this.canStartExercise = (sum === this.total) ? true : false;
   };
+
+  updatePaths() {
+    this._exercise.paths.forEach(function(e) {
+      var path = e.path,
+          startElem = e.startElem;
+      if (startElem.children[0].className.indexOf('exercise-completed') !== -1) {
+        path.setAttribute('stroke', 'gold');
+      } else {
+        path.setAttribute('stroke', 'black');
+      }
+    });
+  }
 
 
 }

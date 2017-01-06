@@ -1,15 +1,24 @@
-<template #tipContent>
-  <a *ngFor="let prereq of exercise.prerequisites">
-    <span [ngClass]="{'prereq-completed': prereq.currentPoints === prereq.maxPoints }">{{prereq.name}}</span>
-  </a>
+<template #tipContent class="tooltip">
+  <div class="title-box">{{title}}</div>
+  <ng-container [ngSwitch]="true">
+    <ul *ngSwitchCase="exercise.prerequisites.length > 0">
+      <li *ngFor="let prereq of exercise.prerequisites"
+          [ngClass]="{'prereq-completed': prereq.currentPoints === prereq.maxPoints }">{{prereq.name}}
+      </li>
+    </ul>
+    <ng-container *ngSwitchCase="exercise.prerequisites.length === 0">
+      <span class="prereq-completed">No prereqs</span>
+    </ng-container>
+  </ng-container>
   
 </template>
 <div class="exercise unselectable"
      [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise, 'hide-element': exercise.id === 'empty'}"
      [ngbTooltip]="tipContent"
-     oncontextmenu="return false"
-     (mouseup)="onClick($event)">
-  <div class="header"><span class="title-box">{{title}}</span></div>
+     (mouseup)="onClick($event)"
+     on-mouseover="onMouseOver()"
+     on-mouseleave="onMouseLeave()"
+     oncontextmenu="return false">
   <div>
     <span class="badge">{{exercise.level}}</span> {{exercise.name}}
   </div>

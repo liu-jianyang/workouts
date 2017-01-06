@@ -4,12 +4,12 @@
       <path
         id="path"
         d="M0 0"         
-        stroke="#000" 
+        stroke="black" 
         fill="none" 
         stroke-width="5px"/>
     </svg>
   </div>
-  <div class="outer-row " *ngFor="let row of exerciseLists" style="margin-bottom: 20px;">
+  <div class="outer-row " *ngFor="let row of exerciseLists">
     <div *ngFor="let element of row" >
       <div class="col-1" *ngIf="element.type === 'level'">
         {{element.level}}
