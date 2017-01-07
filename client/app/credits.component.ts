@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
 })
 
 export class CreditsComponent {
-
+  private title = 'Credits';
+  private list = [
+    {
+      key: 'Steven Low',
+      value: 'Providing the exercises and the progressions'
+    }
+  ];
 }

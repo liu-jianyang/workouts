@@ -9,6 +9,8 @@ import { ExerciseComponent } from './exercise.component';
 import { ExerciseGridComponent } from './exercise-grid.component';
 import { ExerciseDetailComponent } from './exercise-detail.component';
 import { CreditsComponent } from './credits.component';
+import { UpdatesComponent } from './updates.component';
+import { HttpComponent } from './http.component';
 
 import { ExercisesService } from './exercises.service';
 import { NameMappingService } from './name-mapping.service';
@@ -27,7 +29,9 @@ import { AppRoutes } from './app.routes';
     ExerciseComponent,
     ExerciseGridComponent,
     ExerciseDetailComponent,
-    CreditsComponent
+    CreditsComponent,
+    UpdatesComponent,
+    HttpComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [ ExercisesService, NameMappingService ]

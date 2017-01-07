@@ -21,7 +21,7 @@
   z-index: 2;
 }
 
-.grid-container {
+#grid-container {
   padding-top: 20px;
   width: 7100px;
   background-color: #ADD8E6;

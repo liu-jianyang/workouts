@@ -3,15 +3,15 @@
 }
 
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
 }
 
 li {
-    float: left;
+  float: left;
 }
 
 li h1 {
@@ -28,7 +28,7 @@ li a {
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-    background-color: #111;
+  background-color: #111;
 }
 
 .link {
@@ -38,6 +38,19 @@ li a:hover {
 }
 
 .active {
-    background-color: #4CAF50;
-    color: white;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#nav-bar {
+  display:block;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
+}
+
+.nav-bar-wrapper {
+  height: 100%;
 }
