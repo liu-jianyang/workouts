@@ -60,6 +60,8 @@
   bottom: -.6em;
   right: 2em;
   border: 1px solid black;
+  background-color: white;
+  font-size: xx-small;
 }
 
 .hide-element {

@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import {NgbTooltipConfig} from '@ng-bootstrap/ng-bootstrap';
 
-import { Exercise } from './exercise';
-import { ExerciseComponent } from './exercise.component';
-import { ExerciseGridComponent } from './exercise-grid.component';
-
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.component.html',
@@ -20,8 +16,4 @@ export class AppComponent {
     config.placement = 'right';
     config.container = 'body';
   }
-  onSelect(exercise: Exercise): void {
-    // console.log('hi');
-	  this.selectedExercise = exercise;
-	}
 }

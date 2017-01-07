@@ -1,4 +1,8 @@
-<h1>{{title}}</h1>
+<ul>
+  <li><h1>{{title}}</h1></li>
+  <li class="link"><a routerLink="credits" routerLinkActive="active">About</a></li>
+  <li class="link"><a routerLink="updates" routerLinkActive="active">Updates</a></li>
+  <li class="link"><a routerLink="exercises" routerLinkActive="active">Home</a></li>
+</ul>
 
-<exercise-grid></exercise-grid>
-<exercise-detail [exercise]="selectedExercise"></exercise-detail>
+<router-outlet></router-outlet>

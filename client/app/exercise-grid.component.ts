@@ -8,7 +8,7 @@ const LEVELS: Number[] = [
 
 function resetSvg() {
   // reset svg each time 
-  let svg = document.querySelector('#svg');
+  let svg = document.getElementById('svg');
   svg.setAttribute('height', '0');
   svg.setAttribute('width', '0');
 }
