@@ -1,7 +1,7 @@
 {
-  "name": "angular-quickstart",
+  "name": "workouts-app",
   "version": "1.0.0",
-  "description": "QuickStart package.json from the documentation, supplemented with testing support",
+  "description": "Workouts app, supplemented with testing support",
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "start2": "tsc && concurrently  \"lite-server\" ",

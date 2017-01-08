@@ -6,13 +6,13 @@
   text-decoration: none;
   color: white;
   background-color: black;
-  border: 6px solid yellow;
-  box-shadow: 0px 0px 1px 1px yellow, inset 0px 0px 2px yellow;
+  border: 3px solid yellow;
+  box-shadow: 0px 0px 1px 2px yellow, inset 0px 0px 2px yellow;
 }
 
 .exercise-completed {
-  border: 6px solid gold;
-  box-shadow: initial;
+  border: 3px solid gold;
+  box-shadow: 0px 0px 0px 2px gold;
 }
 
 .exercise.selected:hover {
@@ -26,8 +26,8 @@
 }
 
 .disabled {
-  border: 6px groove grey;
-  box-shadow: initial;
+  border: 3px groove grey;
+  box-shadow: 0px 0px 0px 2px grey;
 }
 
 .prereq-completed {
@@ -50,15 +50,30 @@
 
 .title-box {
   background-color: white;
+  color: black;
   padding: 0 5px 0 5px;
+  min-width: 100px;
 }
 
 .footer {
   position: absolute;
   bottom: -.6em;
   right: 2em;
+  border: 1px solid black;
+  background-color: white;
+  font-size: xx-small;
 }
 
 .hide-element {
   visibility: hidden;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0;
 }
