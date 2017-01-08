@@ -2,23 +2,22 @@ import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Rx';
 
+function convertToViewFormat(data) {
+  var lines = data.split('\n');
+  console.log('data:', lines);
+}
+
 @Injectable()
-export class NameMappingService {
-  private url = 'api/name-mapping';
-  // url = 'app/name-mapping.json';
+export class UpdatesService {
+  private url = 'CHANGELOG.md';
   constructor (private http: Http) {}
-  getNameMapping (): Observable<any[]> {
+  getUpdates (): Observable<any[]> {
     return this.http.get(this.url)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
-    let body = res.json();
-    let data = {};
-    body.forEach(function(ele) {
-      data[ele.key] = ele.value;
-    });
-    return data || { };
+    return convertToViewFormat(res._body) || { };
   }
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

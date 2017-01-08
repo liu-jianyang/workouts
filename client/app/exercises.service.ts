@@ -41,7 +41,7 @@ var progressions = [
   'rfelge',
   'squats'];
 
-  progressions = ['hspushups', 'ringshs', 'manna'];
+  // progressions = ['hspushups', 'ringshs', 'manna'];
 
 function replaceStringWithElement(exercise, exerciseLists) {
   exercise.prerequisites = _.map(exercise.prerequisites, function(prerequisite) {
@@ -86,7 +86,7 @@ function convertToViewFormat(exercisesArray) {
 @Injectable()
 export class ExercisesService {
   private url = 'api/exercises';
-  url = 'app/exercises.json';
+  // url = 'app/exercises.json';
   constructor (private http: Http) {}
   getExercises (): Observable<any[]> {
     return this.http.get(this.url)

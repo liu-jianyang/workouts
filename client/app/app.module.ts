@@ -14,6 +14,7 @@ import { HttpComponent } from './http.component';
 
 import { ExercisesService } from './exercises.service';
 import { NameMappingService } from './name-mapping.service';
+import { UpdatesService } from './updates.service';
 
 import { AppRoutes } from './app.routes';
 
@@ -34,6 +35,6 @@ import { AppRoutes } from './app.routes';
     HttpComponent
   ],
   bootstrap: [ AppComponent ],
-  providers: [ ExercisesService, NameMappingService ]
+  providers: [ ExercisesService, NameMappingService, UpdatesService ]
 })
 export class AppModule { }

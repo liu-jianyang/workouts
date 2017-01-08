@@ -14,7 +14,7 @@ export const AppRoutes: Routes = [
   },
   { path: 'exercises', component: ExerciseGridComponent },
   { path: 'exercises/:id', component: ExerciseDetailComponent },
-  { path: 'updates', component: UpdatesComponent },
+  // { path: 'updates', component: UpdatesComponent },
   { path: 'credits', component: CreditsComponent },
   { path: '**', component: HttpComponent }
 ];
