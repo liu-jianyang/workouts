@@ -1,0 +1,11 @@
+.credits {
+  text-align: center;
+  margin-top: 100px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

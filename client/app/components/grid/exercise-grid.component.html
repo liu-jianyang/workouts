@@ -1,0 +1,27 @@
+<div id="grid-container">
+  <div id="svgContainer" style="position: absolute;">
+    <svg id="svg" width="0" height="0" >
+      <path
+        id="path"
+        d="M0 0"         
+        stroke="black" 
+        fill="none" 
+        stroke-width="5px"/>
+    </svg>
+  </div>
+  <div class="outer-row " *ngFor="let row of exerciseLists">
+    <div *ngFor="let element of row" >
+      <div class="col-1" *ngIf="element.type === 'level'">
+        {{element.level}}
+      </div>
+      <exercise-component id="{{element.id}}" 
+                          class="col"
+                          *ngIf="!element.type" 
+                          [exercise]="element"
+                          [title]="nameMapping[element.progression]"
+                          [prereqs]="element.prerequisites"></exercise-component>
+
+    </div>
+  </div>
+
+</div>
