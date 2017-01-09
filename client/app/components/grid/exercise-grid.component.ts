@@ -15,8 +15,8 @@ function resetSvg() {
 
 @Component({
   selector: 'exercise-grid',
-  templateUrl: 'app/exercise-grid.component.html',
-  styleUrls: ['app/exercise-grid.component.css']
+  templateUrl: 'app/components/grid/exercise-grid.component.html',
+  styleUrls: ['app/components/grid/exercise-grid.component.css']
 })
 
 export class ExerciseGridComponent {

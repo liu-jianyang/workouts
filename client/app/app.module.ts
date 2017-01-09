@@ -12,6 +12,16 @@ import { HeroDetailComponent }  from './components/heroDetail/hero-detail.compon
 
 import { HeroService }  from './services/hero.service';
 
+import { ExerciseComponent } from './components/exercise/exercise.component';
+import { ExerciseGridComponent } from './components/grid/exercise-grid.component';
+import { CreditsComponent } from './components/credits/credits.component';
+import { UpdatesComponent } from './components/updates/updates.component';
+import { HttpComponent } from './components/http/http.component';
+
+import { ExercisesService } from './services/exercises.service';
+import { NameMappingService } from './services/name-mapping.service';
+import { UpdatesService } from './services/updates.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -23,10 +33,18 @@ import { HeroService }  from './services/hero.service';
     AppComponent,
     HeroesComponent,
     DashboardComponent,
-    HeroDetailComponent
+    HeroDetailComponent,
+    ExerciseComponent,
+    ExerciseGridComponent,
+    CreditsComponent,
+    UpdatesComponent,
+    HttpComponent
   ],
   providers: [
-    HeroService
+    HeroService,
+    ExercisesService,
+    NameMappingService,
+    UpdatesService
   ],
   bootstrap: [AppComponent]
 })

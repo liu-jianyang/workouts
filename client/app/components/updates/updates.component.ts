@@ -3,8 +3,8 @@ import { UpdatesService } from '../../services/updates.service';
 
 @Component({
   selector: 'updates',
-  templateUrl: 'app/updates.component.html',
-  styleUrls: ['app/updates.component.css']
+  templateUrl: 'app/components/updates/updates.component.html',
+  styleUrls: ['app/components/updates/updates.component.css']
 })
 
 export class UpdatesComponent {

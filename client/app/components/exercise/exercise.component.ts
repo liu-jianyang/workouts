@@ -72,8 +72,8 @@ function drawConnectors(exercise, exercisesToConnect) {
 
 @Component({
   selector: 'exercise-component',
-  templateUrl: 'app/exercise.component.html',
-  styleUrls: ['app/exercise.component.css']
+  templateUrl: 'app/components/exercise/exercise.component.html',
+  styleUrls: ['app/components/exercise/exercise.component.css']
 })
 
 export class ExerciseComponent {
@@ -97,14 +97,17 @@ export class ExerciseComponent {
 
   @Input()
   set prereqs(prereqs) {
+    console.log('this:', this.total);
     if (!prereqs || prereqs.length === 0) {
       this.canStartExercise = true;
       this.showPrerequisites = false;
     } else {
       this._prereqs = prereqs;
+      var currentTotal = 0;
       prereqs.forEach(function(prereq) {
-        this.total += prereq.maxPoints;
+        currentTotal += prereq.maxPoints;
       });
+      this.total = currentTotal;
       this.showPrerequisites = true;
     }
   }
@@ -116,7 +119,7 @@ export class ExerciseComponent {
       let ids = [];
       this._prereqs.forEach(function(prereq) {
         ids.push(prereq.id);
-      })
+      });
       drawConnectors(this._exercise, ids);
       this.hasDrawnLines = true;
     }
