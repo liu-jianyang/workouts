@@ -1,0 +1,13 @@
+<div class="exercise unselectable"
+     [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise, 'hide-element': exercise.id === 'empty'}"
+
+     (mouseup)="onClick($event)"
+     on-mouseover="onMouseOver()"
+     on-mouseleave="onMouseLeave()"
+     oncontextmenu="return false">
+  <div>
+    <span class="badge">{{exercise.level}}</span> {{exercise.name}}
+  </div>
+  <div class="footer"><span class="title-box">{{exercise.currentPoints}} / {{exercise.maxPoints}}</span></div>
+</div>
+
