@@ -12,7 +12,7 @@ import { HttpComponent } from './components/http/http.component';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/exercises',
+    redirectTo: 'exercises',
     pathMatch: 'full'
   },
   { path: 'exercises', component: ExerciseGridComponent },

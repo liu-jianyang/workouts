@@ -2,15 +2,10 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule }     from '@angular/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 import { AppComponent }  from './app.component';
 import { routing }       from './app.routing';
-
-import { HeroesComponent }      from './components/heroes/heroes.component';
-import { DashboardComponent }   from './components/dashboard/dashboard.component';
-import { HeroDetailComponent }  from './components/heroDetail/hero-detail.component';
-
-import { HeroService }  from './services/hero.service';
 
 import { ExerciseComponent } from './components/exercise/exercise.component';
 import { ExerciseGridComponent } from './components/grid/exercise-grid.component';
@@ -31,9 +26,6 @@ import { UpdatesService } from './services/updates.service';
     ],
   declarations: [
     AppComponent,
-    HeroesComponent,
-    DashboardComponent,
-    HeroDetailComponent,
     ExerciseComponent,
     ExerciseGridComponent,
     CreditsComponent,
@@ -41,7 +33,7 @@ import { UpdatesService } from './services/updates.service';
     HttpComponent
   ],
   providers: [
-    HeroService,
+    {provide: APP_BASE_HREF, useValue : '/' },
     ExercisesService,
     NameMappingService,
     UpdatesService
