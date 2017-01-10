@@ -97,7 +97,6 @@ export class ExerciseComponent {
 
   @Input()
   set prereqs(prereqs) {
-    console.log('this:', this.total);
     if (!prereqs || prereqs.length === 0) {
       this.canStartExercise = true;
       this.showPrerequisites = false;
