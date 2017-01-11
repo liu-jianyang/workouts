@@ -69,6 +69,7 @@
 }
 
 ul {
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }
@@ -76,4 +77,26 @@ ul {
 li {
   padding: 0;
   margin: 0;
+}
+
+div.popup {
+  position: absolute;
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  text-align: center;
+  /* Position Information */
+  /* Appearance Information */
+}
+
+div.exercise-container > div.popup {
+  position: absolute;
+  visibility: hidden;
+  /* Position Information */
+  /* Appearance Information */
+}
+
+div.exercise-container > div.exercise:hover + div.popup, div.exercise-container > div.popup:hover {
+  visibility: visible;
+  z-index: 500;
 }

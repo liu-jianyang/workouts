@@ -91,6 +91,7 @@ export class ExerciseComponent {
     this._exercise.maxPoints = 1;
     this._exercise.currentPoints = 0;
     this._exercise.paths = [];
+    this._exercise.prerequisites = exercise.prerequisites || [];
   };
 
   get exercise() { return this._exercise; };
