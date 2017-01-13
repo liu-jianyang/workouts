@@ -70,6 +70,14 @@ function drawConnectors(exercise, exercisesToConnect) {
   });
 }
 
+function movePopup(exerciseID) {
+  var element = document.getElementById(exerciseID);
+  var popup = element.childNodes[0].children[1];
+
+  popup.style.top = 0 - popup.offsetHeight - 5;
+  popup.style.left = (element.offsetWidth - popup.offsetWidth) / 2;
+}
+
 @Component({
   selector: 'exercise-component',
   templateUrl: 'app/components/exercise/exercise.component.html',
@@ -115,6 +123,7 @@ export class ExerciseComponent {
   @Input() title: string;
 
   ngAfterViewInit() {
+    movePopup(this._exercise.id);
     if (this._prereqs.length > 0 && !this.hasDrawnLines) {
       let ids = [];
       this._prereqs.forEach(function(prereq) {
