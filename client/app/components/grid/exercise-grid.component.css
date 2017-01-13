@@ -28,6 +28,14 @@
   z-index: 0;
 }
 
+#svg-container {
+  position: absolute;
+}
+
 body {
   overflow:hidden;
+}
+
+.grid {
+  margin-top: 50px;
 }
