@@ -1,2 +1,4 @@
-UpdatesComponent
-{{updates}}
+<h3 class="title">{{title}}</h3>
+<ul>
+  <li *ngFor="let e in updates">{{e.key}}: {{e.value}}</li>
+</ul>

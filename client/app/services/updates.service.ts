@@ -4,7 +4,27 @@ import { Observable }     from 'rxjs/Rx';
 
 function convertToViewFormat(data) {
   var lines = data.split('\n');
-  console.log('data:', lines);
+  var retArr = [];
+  var retObj = {};
+  for (let i in lines) {
+    var line = lines[i];
+    if (line.match(/^#\s+.+\s+#$/)) {
+      continue;
+    } else if (line.match(/^#\s*.+$/)) {
+      let match = line.match(/^#\s*(.+)$/);
+      retArr.push(retObj);
+      retObj = {};
+      retObj['key'] = match[1];
+    } else if (line.match(/^\s*-\s*.+$/)) {
+      let match = line.match(/^\s*-\s*(.+)$/);
+      if (retObj['value']) {
+        retObj['value'].push(match[1]);
+      } else {
+        retObj['value'] = [match[1]];
+      }
+    }
+  }
+  return retArr;
 }
 
 @Injectable()
