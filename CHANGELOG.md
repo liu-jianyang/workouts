@@ -3,6 +3,10 @@
 # 1.0.0
  - Release candidate
 
+# 0.5.2
+ - Fixed background colors different from each other
+ - Cleaned up styling of updates tab
+
 #0.5.1
  - Added back tooltip on hover
 

@@ -23,7 +23,8 @@
 
 #grid-container {
   padding-top: 20px;
-  width: 8200px;
+  margin-left: 0px;
+  width: 8100px;
   background-color: #ADD8E6;
   z-index: 0;
 }
