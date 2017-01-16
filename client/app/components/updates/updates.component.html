@@ -1,4 +1,10 @@
-<h3 class="title">{{title}}</h3>
-<ul>
-  <li *ngFor="let e of updates">{{e.key}}: {{e.value}}</li>
-</ul>
+<div class="updates">
+  <h1 class="title">{{title}}</h1>
+  <ul>
+    <li *ngFor="let e of updates" class="update-element"><b>{{e.key}}</b>
+      <ul>
+        <li *ngFor="let v of e.value">{{v}}</li>
+      </ul>
+    </li>
+  </ul>
+</div>

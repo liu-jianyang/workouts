@@ -1,8 +1,16 @@
+.updates {
+  margin-top: 100px;
+  margin-left: 10px;
+}
+
 .title {
-  text-align: center;
 }
 
 
 ul {
   list-style-type: none;
+}
+
+.update-element {
+  margin-bottom: 10px;
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ngAfterViewInit, ViewChild } from '@angular/core';
 
 //helper functions, it turned out chrome doesn't support Math.sgn() 
 function signum(x) {
@@ -70,11 +70,10 @@ function drawConnectors(exercise, exercisesToConnect) {
   });
 }
 
-function movePopup(exerciseID) {
+function movePopup(exerciseID, popup) {
   var element = document.getElementById(exerciseID);
-    var popup = element.childNodes[0].children[1];
-    popup.style.top = 0 - popup.clientHeight - 5;
-    popup.style.left = (element.clientWidth - popup.clientWidth) / 2;
+  popup.style.top = 0 - popup.clientHeight - 5;
+  popup.style.left = (element.clientWidth - popup.clientWidth) / 2;
 }
 
 @Component({
@@ -91,6 +90,7 @@ export class ExerciseComponent {
   private canStartExercise = false;
   private total = 0;
   private hasDrawnLines = false;
+  @ViewChild('popupContainer') popup: ElementRef;
 
   @Input()
   set exercise(exercise) {
@@ -122,6 +122,10 @@ export class ExerciseComponent {
   @Input() title: string;
 
   ngAfterViewInit() {
+    if (this._exercise.id === 'empty') {
+      return;
+    }
+    setTimeout(_ => movePopup(this._exercise.id, this.popup));
     if (this._prereqs.length > 0 && !this.hasDrawnLines) {
       let ids = [];
       this._prereqs.forEach(function(prereq) {
@@ -130,11 +134,6 @@ export class ExerciseComponent {
       drawConnectors(this._exercise, ids);
       this.hasDrawnLines = true;
     }
-    setTimeout(_ => movePopup(this._exercise.id));
-  }
-
-  ngAfterViewChecked() {
-    
   }
 
   ngDoCheck() {

@@ -10,7 +10,7 @@
     </div>
     <div class="footer"><span class="title-box">{{exercise.currentPoints}} / {{exercise.maxPoints}}</span></div>
   </div>
-  <div class="popup">
+  <div class="popup" #popupContainer>
     <div class="title-box">{{title}}</div>
     <ng-container [ngSwitch]="true">
       <ul *ngSwitchCase="exercise.prerequisites.length > 0">

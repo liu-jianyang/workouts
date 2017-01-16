@@ -7,7 +7,7 @@
     "clean": "gulp clean",
     "compile": "gulp compile",
     "build": "gulp build",
-    "start": "concurrent --kill-others \"gulp watch\" \"gulp start\""
+    "start": "node build/server.js"
   },
   "keywords": [
     "Angular2",
