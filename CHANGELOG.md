@@ -19,7 +19,6 @@
  - Added paths between exercise and its prerequisites
  - Added navigation bar
 
-#0.3.4
 #0.3.3
  - Updated css
  - Shifted footer so that it will not block text

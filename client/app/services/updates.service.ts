@@ -8,20 +8,24 @@ function convertToViewFormat(data) {
   var retObj = {};
   for (let i in lines) {
     var line = lines[i];
-    if (line.match(/^#\s+.+\s+#$/)) {
+    if (line.match(/^#\s+.+\s+#/)) {
       continue;
-    } else if (line.match(/^#\s*.+$/)) {
-      let match = line.match(/^#\s*(.+)$/);
-      retArr.push(retObj);
+    } else if (line.match(/^#\s*.+/)) {
+      if (Object.keys(retObj).length > 0) {
+        retArr.push(retObj);
+      }
       retObj = {};
+      let match = line.match(/^#\s*(.+)/);
       retObj['key'] = match[1];
-    } else if (line.match(/^\s*-\s*.+$/)) {
-      let match = line.match(/^\s*-\s*(.+)$/);
+    } else if (line.match(/^\s*-\s*.+/)) {
+      let match = line.match(/^\s*-\s*(.+)/);
       if (retObj['value']) {
         retObj['value'].push(match[1]);
       } else {
         retObj['value'] = [match[1]];
       }
+    } else {
+
     }
   }
   return retArr;
