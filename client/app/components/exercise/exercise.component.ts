@@ -1,4 +1,4 @@
-import { Component, Input, ngAfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 //helper functions, it turned out chrome doesn't support Math.sgn() 
 function signum(x) {
@@ -70,10 +70,11 @@ function drawConnectors(exercise, exercisesToConnect) {
   });
 }
 
-function movePopup(exerciseID, popup) {
+function movePopup(exerciseID) {
   var element = document.getElementById(exerciseID);
-  popup.style.top = 0 - popup.clientHeight - 5;
-  popup.style.left = (element.clientWidth - popup.clientWidth) / 2;
+  var popup = element.childNodes[0].children[1];
+  popup.style.top = (0 - popup.clientHeight - 5) + 'px';
+  popup.style.left = ((element.clientWidth - popup.clientWidth) / 2) + 'px';
 }
 
 @Component({
@@ -90,7 +91,7 @@ export class ExerciseComponent {
   private canStartExercise = false;
   private total = 0;
   private hasDrawnLines = false;
-  @ViewChild('popupContainer') popup: ElementRef;
+  private popupUpdated = false;
 
   @Input()
   set exercise(exercise) {
@@ -125,7 +126,6 @@ export class ExerciseComponent {
     if (this._exercise.id === 'empty') {
       return;
     }
-    setTimeout(_ => movePopup(this._exercise.id, this.popup));
     if (this._prereqs.length > 0 && !this.hasDrawnLines) {
       let ids = [];
       this._prereqs.forEach(function(prereq) {
@@ -163,6 +163,10 @@ export class ExerciseComponent {
 
   onMouseOver() {
     event.preventDefault();
+    if (!this.popupUpdated) {
+      movePopup(this._exercise.id);
+      this.popupUpdated = true;
+    }
     this._exercise.paths.forEach(function(e) {
       var path = e.path;
       if (path.getAttribute('stroke') !== 'gold') {

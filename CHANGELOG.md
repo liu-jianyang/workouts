@@ -6,6 +6,8 @@
 # 0.5.2
  - Fixed background colors different from each other
  - Cleaned up styling of updates tab
+ - Fixed tooltip not hovering in the correct spot
+ - Fixed tooltip so code only gets run when element is hovered over
 
 #0.5.1
  - Added back tooltip on hover
@@ -22,6 +24,7 @@
  - Added hover on exercise elements
  - Added paths between exercise and its prerequisites
  - Added navigation bar
+ - Added tooltip based on ng-bootstrap
 
 #0.3.3
  - Updated css
