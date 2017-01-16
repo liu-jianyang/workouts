@@ -40,8 +40,6 @@ var progressions = [
   'rfelge',
   'squats'];
 
-  // progressions = ['hspushups', 'ringshs', 'manna'];
-
 function replaceStringWithElement(exercise, exerciseLists) {
   for (let i = 0; i < exercise.prerequisites.length; i++) {
     let array = exercise.prerequisites[i].split('_');
