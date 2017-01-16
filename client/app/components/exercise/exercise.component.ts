@@ -26,7 +26,7 @@ function drawPath(svg, path, startX, startY, endX, endY) {
 }
 
 function connectElements(exercise, startElem, endElem) {
-  var svgContainer = document.getElementById('svgContainer');
+  var svgContainer = document.getElementById('svg-container');
   var svg = document.getElementById('svg');
   var path = document.getElementById('path');
   var newPath = path.cloneNode(true);
@@ -72,10 +72,9 @@ function drawConnectors(exercise, exercisesToConnect) {
 
 function movePopup(exerciseID) {
   var element = document.getElementById(exerciseID);
-  var popup = element.childNodes[0].children[1];
-
-  popup.style.top = 0 - popup.offsetHeight - 5;
-  popup.style.left = (element.offsetWidth - popup.offsetWidth) / 2;
+    var popup = element.childNodes[0].children[1];
+    popup.style.top = 0 - popup.clientHeight - 5;
+    popup.style.left = (element.clientWidth - popup.clientWidth) / 2;
 }
 
 @Component({
@@ -123,7 +122,6 @@ export class ExerciseComponent {
   @Input() title: string;
 
   ngAfterViewInit() {
-    movePopup(this._exercise.id);
     if (this._prereqs.length > 0 && !this.hasDrawnLines) {
       let ids = [];
       this._prereqs.forEach(function(prereq) {
@@ -132,6 +130,11 @@ export class ExerciseComponent {
       drawConnectors(this._exercise, ids);
       this.hasDrawnLines = true;
     }
+    setTimeout(_ => movePopup(this._exercise.id));
+  }
+
+  ngAfterViewChecked() {
+    
   }
 
   ngDoCheck() {
