@@ -79,7 +79,6 @@ function convertToViewFormat(exercisesArray) {
     });
     listOfLists.push(row);
   });
-  console.log('list:', listOfLists);
   return listOfLists;
 }
 

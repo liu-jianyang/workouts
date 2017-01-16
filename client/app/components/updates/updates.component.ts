@@ -8,7 +8,8 @@ import { UpdatesService } from '../../services/updates.service';
 })
 
 export class UpdatesComponent {
-  updates = '';
+  private title = 'Changelog';
+  updates = [];
   errorMessage: string;
   mode = 'Observable';
   constructor (private updatesService: UpdatesService) {};
