@@ -11,7 +11,10 @@ export class CreditsComponent {
   private list = [
     {
       key: 'Steven Low',
-      value: 'Providing the exercises and the progressions'
+      value: 'Provided the exercises and the progressions @ '
+      html: {
+        route: '<a target="_blank" href="http://www.eatmoveimprove.com/">EatMoveImprove</a>'
+      }
     }
   ];
 }
