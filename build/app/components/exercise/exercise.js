@@ -1,0 +1,9 @@
+"use strict";
+var Exercise = (function () {
+    function Exercise() {
+    }
+    return Exercise;
+}());
+exports.Exercise = Exercise;
+
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC9jb21wb25lbnRzL2V4ZXJjaXNlL2V4ZXJjaXNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQTtJQUFBO0lBS0EsQ0FBQztJQUFELGVBQUM7QUFBRCxDQUxBLEFBS0MsSUFBQTtBQUxZLDRCQUFRIiwiZmlsZSI6ImFwcC9jb21wb25lbnRzL2V4ZXJjaXNlL2V4ZXJjaXNlLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNsYXNzIEV4ZXJjaXNlIHtcclxuICBpZDogc3RyaW5nO1xyXG4gIG5hbWU6IHN0cmluZztcclxuICBwcm9ncmVzc2lvbjogc3RyaW5nO1xyXG4gIHByZXJlcXVpc2l0ZXM6IEFycmF5PHN0cmluZz47XHJcbn0iXX0=
