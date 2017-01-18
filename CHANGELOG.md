@@ -1,5 +1,10 @@
 # workouts changelog #
 
+# 1.0.1
+ - Added prereqs based on Steven Low's recommendations
+ - Added link in credits section to Steven Low's website
+ - Updated styling of difficulty label to be more apparent
+
 # 1.0.0
  - Release candidate
 

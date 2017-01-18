@@ -1,6 +1,6 @@
 <div class="credits">
   <h1>{{title}}</h1>
   <ul>
-    <li *ngFor="let e of list">{{e.key}}: {{e.value}}</li>
+    <li *ngFor="let e of list"><span><b>{{e.key}}</b>: {{e.value}}</span><span *ngIf="e.html" [innerHtml]="e.html.route"></span></li>
   </ul>
 </div>

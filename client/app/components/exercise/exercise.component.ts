@@ -73,7 +73,7 @@ function drawConnectors(exercise, exercisesToConnect) {
 function movePopup(exerciseID) {
   var element = document.getElementById(exerciseID);
   var popup = element.childNodes[0].children[1];
-  popup.style.top = (0 - popup.clientHeight - 5) + 'px';
+  popup.style.top = (0 - popup.clientHeight) + 'px';
   popup.style.left = ((element.clientWidth - popup.clientWidth) / 2) + 'px';
 }
 
