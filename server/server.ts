@@ -17,27 +17,25 @@ app.use(cookieParser());
 
 var router = express.Router();
 
-function openConnection() {
-  return new sqlite3.Database('workouts.db');
-}
-
-function closeConnection(db) {
-  return db.close();
-}
+var db = new sqlite3.Database('workouts.db');
 
 router.get('/api/exercises', function(req, res, next) {
-  var db = openConnection();
   db.all('SELECT * from EXERCISES', [], function(err, data) {
-    db.close();
     if(err) throw err;
     res.send(data);
   });
 });
 
+router.get('/api/exercise/:id', function(req, res, next) {
+  var id = req.params.id;
+  db.get('SELECT * from EXERCISEINFORMATION where id = ?', [id], function(err, row) {
+    if(err) throw err;
+    res.send(row || {});
+  });
+});
+
 router.get('/api/name-mapping', function(req, res, next) {
-  var db = openConnection();
   db.all('SELECT * from NAMEMAPPING', [], function(err, data) {
-    db.close();
     if(err) throw err;
     res.send(data);
   });
