@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ExercisesService } from '../../services/exercises.service';
 
 //helper functions, it turned out chrome doesn't support Math.sgn() 
 function signum(x) {
@@ -70,11 +71,9 @@ function drawConnectors(exercise, exercisesToConnect) {
   });
 }
 
-function movePopup(exerciseID) {
-  var element = document.getElementById(exerciseID);
-  var popup = element.childNodes[0].children[1];
-  popup.style.top = (0 - popup.clientHeight) + 'px';
-  popup.style.left = ((element.clientWidth - popup.clientWidth) / 2) + 'px';
+function movePopup(popup, element) {
+  popup.style.top = (0 - (popup.clientHeight - element.clientHeight)/2) + 'px';
+  popup.style.left = element.clientWidth - 30 + 'px';
 }
 
 @Component({
@@ -86,13 +85,25 @@ function movePopup(exerciseID) {
 export class ExerciseComponent {
   private _exercise = {};
   private _prereqs = [];
+  private exerciseInfo;
+  private errorMessage;
   private showPrerequisites = false;
   private completedExercise = false;
   private canStartExercise = false;
   private total = 0;
   private hasDrawnLines = false;
   private popupUpdated = false;
+  private popup;
+  private element;
+  private mouseOver = false;
+  constructor (private exercisesService: ExercisesService) {};
 
+  getExercise(eid) {
+    this.exercisesService.getExercise(eid)
+      .subscribe(
+        exercise => this.exerciseInfo = exercise,
+        error =>  this.errorMessage = <any>error);
+  };
   @Input()
   set exercise(exercise) {
     this._exercise = exercise;
@@ -163,10 +174,25 @@ export class ExerciseComponent {
 
   onMouseOver() {
     event.preventDefault();
+    if (this.mouseOver) {
+      return;
+    }
+    this.mouseOver = true;
     if (!this.popupUpdated) {
-      movePopup(this._exercise.id);
+      this.element = document.getElementById(this._exercise.id);
+      this.popup = this.element.childNodes[0].children[1];
+      movePopup(this.popup, this.element);
+      this.getExercise(this._exercise.id);
       this.popupUpdated = true;
     }
+    
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    if (this.element.getBoundingClientRect().right + this.popup.clientWidth > w) {
+      this.popup.style.left = 0 - this.popup.clientWidth - 5 + 'px';
+    } else {
+      this.popup.style.left = this.element.clientWidth - 30 + 'px';
+    }
+    
     this._exercise.paths.forEach(function(e) {
       var path = e.path;
       if (path.getAttribute('stroke') !== 'gold') {
@@ -177,6 +203,7 @@ export class ExerciseComponent {
 
   onMouseLeave() {
     event.preventDefault();
+    this.mouseOver = false;
     this._exercise.paths.forEach(function(e) {
       var path = e.path;
       if (path.getAttribute('stroke') !== 'gold') {

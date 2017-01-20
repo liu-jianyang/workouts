@@ -82,17 +82,26 @@ function convertToViewFormat(exercisesArray) {
 
 @Injectable()
 export class ExercisesService {
-  private url = 'api/exercises';
-  // url = 'app/mock/exercises.json';
   constructor (private http: Http) {}
   getExercises (): Observable<any[]> {
-    return this.http.get(this.url)
+    let url = 'api/exercises';
+    return this.http.get(url)
+                    .map(this.extractDataToViewFormat)
+                    .catch(this.handleError);
+  }
+  private extractDataToViewFormat(res: Response) {
+    let body = res.json();
+    return convertToViewFormat(body) || { };
+  }
+  getExercise (eid): Observable<any[]> {
+    let url = 'api/exercise';
+    return this.http.get(url + '/' + eid)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
     let body = res.json();
-    return convertToViewFormat(body) || { };
+    return body.info || '';
   }
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
