@@ -101,7 +101,6 @@ export class ExercisesService {
   }
   private extractData(res: Response) {
     let body = res.json();
-    console.log('body:', body);
     return body.info || '';
   }
   private handleError (error: Response | any) {
