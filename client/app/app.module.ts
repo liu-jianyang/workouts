@@ -3,19 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule }     from '@angular/http';
 import {APP_BASE_HREF} from '@angular/common';
+// import { fakeBackendProvider } from './mock/index';
+// import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { AppComponent }  from './app.component';
 import { routing }       from './app.routing';
 
-import { ExerciseComponent } from './components/exercise/exercise.component';
-import { ExerciseGridComponent } from './components/grid/exercise-grid.component';
-import { CreditsComponent } from './components/credits/credits.component';
-import { UpdatesComponent } from './components/updates/updates.component';
-import { HttpComponent } from './components/http/http.component';
+import { ExerciseComponent } from './components/exercise/index';
+import { ExerciseGridComponent } from './components/grid/index';
+import { CreditsComponent } from './components/credits/index';
+import { UpdatesComponent } from './components/updates/index';
+import { HttpComponent } from './components/http/index';
+import { LoginComponent } from './components/login/index';
+import { RegisterComponent } from './components/register/index';
 
-import { ExercisesService } from './services/exercises.service';
-import { NameMappingService } from './services/name-mapping.service';
-import { UpdatesService } from './services/updates.service';
+import { ExercisesService, NameMappingService, UpdatesService, AuthenticationService, UserService } from './services/index';
 
 @NgModule({
   imports: [
@@ -30,13 +32,21 @@ import { UpdatesService } from './services/updates.service';
     ExerciseGridComponent,
     CreditsComponent,
     UpdatesComponent,
-    HttpComponent
+    HttpComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' },
     ExercisesService,
     NameMappingService,
-    UpdatesService
+    UpdatesService,
+    AuthenticationService,
+    UserService
+
+    // providers used to create fake backend
+    // fakeBackendProvider,
+    // MockBackend
   ],
   bootstrap: [AppComponent]
 })
