@@ -25,7 +25,8 @@ export class UserService {
   }
 
   create(user: User) {
-    return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
+    //TODO: Change depending on what method of registration
+    return this.http.post('/api/local-reg', user, this.jwt()).map((response: Response) => response.json());
   }
 
   update(user: User) {
@@ -45,9 +46,9 @@ export class UserService {
       let headers = new Headers({
         'Authorization': 'Bearer ' + currentUser.token
       });
-      return new RequestOptions({
+      return new Response(new RequestOptions({
         headers: headers
-      });
+      }));
     }
   }
 }
