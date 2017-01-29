@@ -11,11 +11,13 @@ import methodOverride = require('method-override');
 import session = require('express-session');
 import passport = require('passport');
 import LocalStrategy = require('passport-local');
+import jwt = require('jsonwebtoken');
 
 var port: number = process.env.PORT || 3000;
 var app = express();
 
 var db = new sqlite3.Database('workouts.db');
+var secret = 'Jj3A2n2YoPQwSWRx';
 
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use(logger('dev'));
@@ -26,6 +28,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.set('secret', secret);
 
 //===============PASSPORT=================
 // Passport session setup.
@@ -39,12 +42,18 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+function signUsername(username) {
+  var token = jwt.sign({username: username}, app.get('secret'), {
+      expiresIn: '30 days' // expires in 30 days
+    }, { algorithm: 'RS256' });
+  // return the information including token as JSON
+  return {
+    token: token
+  });
+}
 function localAuth(username, password) {
   var deferred = Q.defer();
-  console.log(username, password);
   db.get('SELECT * from USERS where username = $username', {$username: username}, function(err, result) {
-    console.log('hi:', result);
-    console.log('err:', err);
     if (err) deferred.reject(err);
     if (result === undefined) {
       console.log('Username not found:', username);
@@ -53,7 +62,7 @@ function localAuth(username, password) {
       var hash = result.password;
       console.log('Found user:', result.username);
       if (bcrypt.compareSync(password, hash)) {
-        deferred.resolve(result);
+        deferred.resolve(signUsername(username));
       } else {
         console.log('Authentication failed');
         deferred.resolve(false);
@@ -80,7 +89,7 @@ function localReg(username, password) {
         if (err) {
           deferred.reject(err);
         }
-        deferred.resolve({username: username});
+        deferred.resolve({username: signUsername(username)});
       })
     }
   });
@@ -90,7 +99,7 @@ function localReg(username, password) {
 // Use the LocalStrategy within Passport to login/"signin" users.
 passport.use('local-signin', new LocalStrategy(
   {passReqToCallback : true}, //allows us to pass back the request to the callback
-  function(req, user, done) {
+  function(req, username, password, done) {
     localAuth(username, password)
     .then(function (user) {
       if (user) {
@@ -158,10 +167,16 @@ router.get('/api/name-mapping', function(req, res, next) {
 });
 
 //sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
-router.post('/api/local-reg', passport.authenticate('local-signup', {
-  successRedirect: '/',
-  failureRedirect: '/register'
-  })
+router.post('/api/local-reg', passport.authenticate('local-signup', { failWithError: true }),
+  function(req, res, next) {
+    // handle success
+    return res.json({ user: req.user.username });
+  },
+  function(err, req, res, next) {
+    // handle error
+    if (req.xhr) { return res.json(err); }
+    return res.redirect('/login');
+  }
 );
 
 //sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page

@@ -10,7 +10,7 @@ import {
 
 import {
   User
-} from '../_models/index';
+} from '../models/user';
 
 @Injectable()
 export class UserService {
@@ -24,9 +24,13 @@ export class UserService {
     return this.http.get('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
   }
 
+  loggedIn() {
+    return this.http.get('/api/loggedin/', this.jwt()).map((response: Response) => response.json());
+  }
+
   create(user: User) {
     //TODO: Change depending on what method of registration
-    return this.http.post('/api/local-reg', user, this.jwt()).map((response: Response) => response.json());
+    return this.http.post('/api/local-reg', user, this.jwt()).map(this.createFunc);
   }
 
   update(user: User) {
@@ -42,6 +46,7 @@ export class UserService {
   private jwt() {
     // create authorization header with jwt token
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log('currentUser:', currentUser);
     if (currentUser && currentUser.token) {
       let headers = new Headers({
         'Authorization': 'Bearer ' + currentUser.token
@@ -50,5 +55,12 @@ export class UserService {
         headers: headers
       }));
     }
+  }
+
+
+  private createFunc(res: Response) {
+    var body = res.json();
+    localStorage.setItem('currentUser', body.user);
+    return res.json();
   }
 }

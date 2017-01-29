@@ -23,10 +23,10 @@ export class RegisterComponent {
         data => {
           // set success message and pass true paramater to persist the message after redirecting to the login page
           console.log('Registration successful', true);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         },
         error => {
-          console.log(error);
+          console.log('Failure:', error);
           this.loading = false;
         });
   }
