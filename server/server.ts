@@ -12,15 +12,18 @@ import session = require('express-session');
 import passport = require('passport');
 import LocalStrategy = require('passport-local');
 import jwt = require('jsonwebtoken');
+import fs = require('fs');
+import path = require('path');
 
 var port: number = process.env.PORT || 3000;
 var app = express();
 
 var db = new sqlite3.Database('workouts.db');
 var secret = 'Jj3A2n2YoPQwSWRx';
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
 
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
-app.use(logger('dev'));
+app.use(logger('dev', {stream: accessLogStream}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -48,6 +51,7 @@ function signUsername(username) {
     }, { algorithm: 'RS256' });
   // return the information including token as JSON
   return {
+    username: username,
     token: token
   });
 }
@@ -166,6 +170,24 @@ router.get('/api/name-mapping', function(req, res, next) {
   });
 });
 
+router.get('/api/loggedin', function(req, res, next) {
+  if (req.headers && req.headers.authorization) {
+    let token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+      return false;
+    } else {
+      try {
+        jwt.verify(token, app.get('secret'), { algorithm: 'RS256' });
+        res.send(true);
+      } catch(err) {
+        res.send(err);
+      }
+    }
+  } else {
+    res.send(false);
+  }
+});
+
 //sends the request through our local signup strategy, and if successful takes user to homepage, otherwise returns then to signin page
 router.post('/api/local-reg', passport.authenticate('local-signup', { failWithError: true }),
   function(req, res, next) {
@@ -187,12 +209,12 @@ router.post('/api/authenticate', passport.authenticate('local-signin', {
 );
 
 //logs user out of site, deleting them from the session, and returns to homepage
-router.get('/api/logout', function(req, res){
-  var name = req.user.username;
-  console.log("LOGGIN OUT " + req.user.username)
-  req.logout();
-  res.redirect('/');
-  req.session.notice = "You have successfully been logged out " + name + "!";
+router.post('/api/logout', function(req, res){
+  var name = req.body.username;
+  console.log("LOGGING OUT " + req.body.username);
+  req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
 });
 
 app.use('/', router);
