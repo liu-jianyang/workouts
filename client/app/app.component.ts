@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import { UserService } from './services/index';
+import { UserService, AuthenticationService } from './services/index';
 @Component({
   selector:'my-app',
   templateUrl: './app/app.component.html',
@@ -12,7 +12,8 @@ export class AppComponent {
   private isLoggedIn = false;
 
   constructor(
-    private userService: UserService) { }
+    private userService: UserService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     console.log('app.component init');
@@ -22,7 +23,7 @@ export class AppComponent {
           this.isLoggedIn = data;
         },
         error => {
-          console.log('Failure:', error);
+          console.log('Failure checking if user is logged in:', error);
           this.isLoggedIn = false;
         });
   }
@@ -34,13 +35,10 @@ export class AppComponent {
   }
 
   logout() {
-    console.log('called');
-    this.userService.logout()
+    this.authenticationService.logout()
       .subscribe(
         data => {
-          if (data) {
-            this.isLoggedIn = false;
-          }
+          this.isLoggedIn = false;
         },
         error => {
           console.log('Failure logging out:', error);

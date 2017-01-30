@@ -24,35 +24,27 @@ export class UserService {
 
   getUser() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log('hi:', currentUser);
     return currentUser.username;
   }
 
   loggedIn() {
-    return this.http.get('/api/loggedin/', this.jwt())
-      .map(this.isLoggedIn)
+    return this.http.get('/api/loggedin', this.jwt())
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        return response._body === 'true';
+      })
       .catch(this.handleError);
   }
 
   create(user: User) {
     //TODO: Change depending on what method of registration
     return this.http.post('/api/local-reg', user, this.jwt())
-      .map(this.afterAuthenticate)
-      .catch(this.handleError);
-  }
-
-  login(user: User) {
-    return this.http.post('/api/authenticate', user, this.jwt())
-      .map(this.afterAuthenticate)
-      .catch(this.handleError);
-  }
-
-  logout() {
-    let user = {
-      username: this.getUser();
-    }
-    return this.http.post('/api/logout', user, this.jwt())
-      .map(this.afterLogout)
+      .map((response: Response) => {
+        console.log('create res:', response.json());
+        var body = response.json();
+        localStorage.setItem('currentUser', JSON.stringify(body.user));
+        return true;
+      })
       .catch(this.handleError);
   }
 
@@ -82,22 +74,6 @@ export class UserService {
       }));
     }
   }
-
-  private afterAuthenticate(res: Response) {
-    var body = res.json();
-    localStorage.setItem('currentUser', JSON.stringify(body.user));
-    return true;
-  }
-
-  private afterLogout(res: Response) {
-    localStorage.removeItem('currentUser');
-    return true;
-  }
-
-  private isLoggedIn(res: Response) {
-    return res._body === 'true';
-  }
-
 
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

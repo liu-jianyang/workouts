@@ -41,7 +41,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(obj, done) {
-  console.log("deserializing " + obj);
+  console.log("deserializing " + obj.username);
   done(null, obj);
 });
 
@@ -93,7 +93,7 @@ function localReg(username, password) {
         if (err) {
           deferred.reject(err);
         }
-        deferred.resolve({username: signUsername(username)});
+        deferred.resolve(signUsername(username));
       })
     }
   });
@@ -192,20 +192,24 @@ router.get('/api/loggedin', function(req, res, next) {
 router.post('/api/local-reg', passport.authenticate('local-signup', { failWithError: true }),
   function(req, res, next) {
     // handle success
-    return res.json({ user: req.user.username });
+    return res.json({ user: req.user });
   },
   function(err, req, res, next) {
     // handle error
-    if (req.xhr) { return res.json(err); }
-    return res.redirect('/login');
+    return res.json(err);
   }
 );
 
 //sends the request through our local login/signin strategy, and if successful takes user to homepage, otherwise returns then to signin page
-router.post('/api/authenticate', passport.authenticate('local-signin', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-  })
+router.post('/api/authenticate', passport.authenticate('local-signin', { failWithError: true }),
+  function(req, res, next) {
+    // handle success
+    return res.json({ user: req.user });
+  },
+  function(err, req, res, next) {
+    // handle error
+    return res.json(err);
+  }
 );
 
 //logs user out of site, deleting them from the session, and returns to homepage
