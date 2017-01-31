@@ -7,6 +7,8 @@ import { HttpComponent } from './components/http/index';
 import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
 
+import { AuthenticationResolver } from './services/index';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -16,8 +18,8 @@ const appRoutes: Routes = [
   { path: 'exercises', component: ExerciseGridComponent },
   { path: 'updates', component: UpdatesComponent },
   { path: 'credits', component: CreditsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, resolve: { auth: AuthenticationResolver } },
+  { path: 'register', component: RegisterComponent, resolve: { auth: AuthenticationResolver } },
   { path: '**', component: HttpComponent }
 ];
 

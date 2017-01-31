@@ -20,7 +20,7 @@ import { HttpComponent } from './components/http/index';
 import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
 
-import { ExercisesService, NameMappingService, UpdatesService, AuthenticationService, UserService } from './services/index';
+import { ExercisesService, NameMappingService, UpdatesService, AuthenticationService, UserService, AuthenticationResolver } from './services/index';
 
 @NgModule({
   imports: [
@@ -45,7 +45,8 @@ import { ExercisesService, NameMappingService, UpdatesService, AuthenticationSer
     NameMappingService,
     UpdatesService,
     AuthenticationService,
-    UserService
+    UserService,
+    AuthenticationResolver
 
     // providers used to create fake backend
     // fakeBackendProvider,
