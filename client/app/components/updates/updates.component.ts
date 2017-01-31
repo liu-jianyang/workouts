@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UpdatesService } from '../../services/updates.service';
+import { UpdatesService } from '../../services/index';
 
 @Component({
   selector: 'updates',

@@ -1,5 +1,11 @@
 # workouts changelog #
 
+# 1.1.0
+ - Added Registration
+ - Added Login
+ - Added resolve guards to /register and /login
+ - Added jwt
+
 # 1.0.1
  - Added prereqs based on Steven Low's recommendations
  - Added link in credits section to Steven Low's website
