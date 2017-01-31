@@ -16,7 +16,6 @@ export class AppComponent {
     private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    console.log('app.component init');
     this.userService.loggedIn()
       .subscribe(
         data => {
