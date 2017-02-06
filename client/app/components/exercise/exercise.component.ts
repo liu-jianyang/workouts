@@ -98,12 +98,28 @@ export class ExerciseComponent {
   private mouseOver = false;
   constructor (private exercisesService: ExercisesService) {};
 
-  getExercise(eid) {
+  getExerciseInfo(eid) {
     this.exercisesService.getExercise(eid)
       .subscribe(
-        exercise => this.exerciseInfo = exercise,
-        error =>  this.errorMessage = <any>error);
+        exercise => {
+          this.exerciseInfo = exercise;
+          },
+        error =>  this.errorMessage = <any>error
+      );
   };
+
+  getExerciseUserInfo(eid) {
+    let points = this.exercisesService.getExercisePoints(eid);
+    this._exercise.currentPoints = points;
+  };
+
+  updateUserExercise(exercise) {
+    this.exercisesService.setUserExercises([exercise])
+      .subscribe(
+        error =>  this.errorMessage = <any>error
+      );
+  };
+
   @Input()
   set exercise(exercise) {
     this._exercise = exercise;
@@ -148,6 +164,7 @@ export class ExerciseComponent {
   }
 
   ngDoCheck() {
+    this.getExerciseUserInfo(this._exercise.id);
     if (this._prereqs.length > 0 && JSON.stringify(this._prereqs) !== this.oldPoints) {
       this.checkPrereqsComplete();
       this.updatePaths();
@@ -162,13 +179,11 @@ export class ExerciseComponent {
     }
     if (event.button === 0 && this._exercise.currentPoints < this._exercise.maxPoints) {
       this._exercise.currentPoints++;
+      this.updateUserExercise({id: this._exercise.id, points: this._exercise.currentPoints});      
     } else if (event.button === 2 && this._exercise.currentPoints > 0) {
       this._exercise.currentPoints--;
-    }
-    if (this._exercise.currentPoints === this._exercise.maxPoints) {
-      this._exercise.completedExercise = this.completedExercise = true;
-    } else {
-      this._exercise.completedExercise = this.completedExercise = false;
+      this.updateUserExercise({id: this._exercise.id, points: this._exercise.currentPoints});
+
     }
   };
 
@@ -182,7 +197,7 @@ export class ExerciseComponent {
       this.element = document.getElementById(this._exercise.id);
       this.popup = this.element.childNodes[0].children[1];
       movePopup(this.popup, this.element);
-      this.getExercise(this._exercise.id);
+      this.getExerciseInfo(this._exercise.id);
       this.popupUpdated = true;
     }
     
@@ -232,5 +247,7 @@ export class ExerciseComponent {
     });
   }
 
-
+  checkCompleted() {
+    return this._exercise.currentPoints === this._exercise.maxPoints;
+  }
 }

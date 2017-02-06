@@ -1,5 +1,5 @@
 import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Rx';
 
 const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
@@ -82,27 +82,81 @@ function convertToViewFormat(exercisesArray) {
 
 @Injectable()
 export class ExercisesService {
+  // hash of eid as key and completed as value
+  private userExercises = {};
+
   constructor (private http: Http) {}
+
   getExercises (): Observable<any[]> {
     let url = 'api/exercises';
     return this.http.get(url)
                     .map(this.extractDataToViewFormat)
                     .catch(this.handleError);
   }
+
   private extractDataToViewFormat(res: Response) {
     let body = res.json();
     return convertToViewFormat(body) || { };
   }
+
   getExercise (eid): Observable<any[]> {
-    let url = 'api/exercise';
-    return this.http.get(url + '/' + eid)
+    return this.http.get('/api/exercise/' + eid)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.info || '';
   }
+
+  setUserExercises(exercises): Observable<any[]> {
+    return this.http.post('/api/user-exercises', exercises, this.jwt())
+      .map((res: Response) => {
+        for (let i = 0; i < exercises.length; i++) {
+          let e = exercises[i];
+          this.userExercises[e.id] = e.points;
+        }
+        return true;
+      })
+      .catch(this.handleError);
+  }
+
+  getUserExercises(): Observable<any[]> {
+    return this.http.get('/api/user-exercises', this.jwt())
+      .map((res: Response) => {
+        this.userExercises = {};
+        let body = res.json();
+        for (var i = 0; i < body.length; i++) {
+          let exercise = body[i];
+          this.userExercises[exercise.id] = exercise.points;
+        }
+        return this.userExercises;
+      })
+      .catch(this.handleError);
+  }
+
+  clearUserExercises() {
+    this.userExercises = {};
+  }
+
+  getExercisePoints(eid) {
+    return this.userExercises[eid] || 0;
+  }
+
+  private jwt() {
+    // create authorization header with jwt token
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.token) {
+      let headers = new Headers({
+        'Authorization': 'Bearer ' + currentUser.token
+      });
+      return new Response(new RequestOptions({
+        headers: headers
+      }));
+    }
+  }
+
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
