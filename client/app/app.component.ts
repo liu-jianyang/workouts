@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import { UserService, AuthenticationService } from './services/index';
+import { UserService, AuthenticationService, ExercisesService } from './services/index';
 @Component({
   selector:'my-app',
   templateUrl: './app/app.component.html',
@@ -13,6 +13,7 @@ export class AppComponent {
 
   constructor(
     private userService: UserService,
+    private exercisesService: ExercisesService,
     private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class AppComponent {
       .subscribe(
         data => {
           this.isLoggedIn = false;
+          this.exercisesService.clearUserExercises();
         },
         error => {
           console.log('Failure logging out:', error);

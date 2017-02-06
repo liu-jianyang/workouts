@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ExercisesService, NameMappingService } from '../../services/index';
+import { ExercisesService, NameMappingService, UserService } from '../../services/index';
 
 const LEVELS: Number[] = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
@@ -23,10 +23,15 @@ export class ExerciseGridComponent {
   nameMapping = {};
   errorMessage: string;
   mode = 'Observable';
-  constructor (private exercisesService: ExercisesService, private nameMappingService: NameMappingService) {};
+  constructor (
+    private exercisesService: ExercisesService, 
+    private nameMappingService: NameMappingService,
+    private userService: UserService) {};
+
   ngOnInit() {
     this.getExercises();
     this.getNameMapping();
+    this.getUserExercises();
     resetSvg();
   };
 
@@ -34,6 +39,13 @@ export class ExerciseGridComponent {
     this.exercisesService.getExercises()
       .subscribe(
         exercises => this.exerciseLists = exercises,
+        error =>  this.errorMessage = <any>error);
+  };
+
+  getUserExercises() {
+    this.exercisesService.getUserExercises()
+      .subscribe(
+        userExercises => this.isLoaded = true,
         error =>  this.errorMessage = <any>error);
   };
   getNameMapping() {

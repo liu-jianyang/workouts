@@ -1,6 +1,6 @@
 <div class="exercise-container">
   <div class="exercise unselectable"
-       [ngClass]="{'exercise-completed': completedExercise, 'disabled': !canStartExercise, 'hide-element': exercise.id === 'empty'}"
+       [ngClass]="{'exercise-completed': checkCompleted(), 'disabled': !canStartExercise, 'hide-element': exercise.id === 'empty'}"
        (mouseup)="onClick($event)"
        on-mouseover="onMouseOver()"
        on-mouseleave="onMouseLeave()"
