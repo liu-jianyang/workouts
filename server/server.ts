@@ -12,6 +12,7 @@ import session = require('express-session');
 import passport = require('passport');
 import LocalStrategy = require('passport-local');
 import jwt = require('jsonwebtoken');
+import moment = require('moment');
 import fs = require('fs');
 import path = require('path');
 
@@ -228,13 +229,17 @@ router.get('/api/loggedin', function(req, res, next) {
   if (req.headers && req.headers.authorization) {
     let token = req.headers.authorization.split(' ')[1];
     if (!token) {
-      return false;
+      res.send(false);
     } else {
       try {
-        jwt.verify(token, app.get('secret'), { algorithm: 'RS256' });
-        res.send(true);
+        let jwtJson = jwt.verify(token, app.get('secret'), { algorithm: 'RS256' });
+        if (moment().format('X') >= jwtJson.exp.toString()) {
+          res.send(false);
+        } else {
+          res.send(true);
+        }
       } catch(err) {
-        res.send(err);
+        throw err;
       }
     }
   } else {

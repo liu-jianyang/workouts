@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/fromPromise';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { UserService } from './index';
 
@@ -11,19 +13,6 @@ export class AuthenticationResolver implements Resolve<any> {
   ) {}
 
   resolve(): Observable<any> {
-    this.us.loggedIn()
-      .subscribe(
-        data => {
-          if (data) {
-            this.router.navigate(['/']);
-            return null;
-          } else { // id not found
-            return false;
-          }
-        },
-        error => {
-          console.log('Failure checking if user is logged in:', error);
-          return false;
-        });
+    return Observable.fromPromise(this.us.loggedIn());
   }
 }

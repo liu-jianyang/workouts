@@ -40,7 +40,6 @@ export class UserService {
     //TODO: Change depending on what method of registration
     return this.http.post('/api/local-reg', user, this.jwt())
       .map((response: Response) => {
-        console.log('create res:', response.json());
         var body = response.json();
         localStorage.setItem('currentUser', JSON.stringify(body.user));
         return true;
