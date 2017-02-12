@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
-import { UserService, AuthenticationService, ExercisesService } from './services/index';
+import { UserService, AuthenticationService } from './services/index';
 @Component({
   selector:'my-app',
   templateUrl: './app/app.component.html',
@@ -13,7 +13,6 @@ export class AppComponent {
 
   constructor(
     private userService: UserService,
-    private exercisesService: ExercisesService,
     private authenticationService: AuthenticationService) { }
 
   ngOnInit() {

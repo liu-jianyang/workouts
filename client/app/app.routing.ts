@@ -18,8 +18,8 @@ const appRoutes: Routes = [
   { path: 'exercises', component: ExerciseGridComponent },
   { path: 'updates', component: UpdatesComponent },
   { path: 'credits', component: CreditsComponent },
-  { path: 'login', component: LoginComponent, resolve: { auth: AuthenticationResolver } },
-  { path: 'register', component: RegisterComponent, resolve: { auth: AuthenticationResolver } },
+  { path: 'login', component: LoginComponent, canActivate: [ AuthenticationResolver ] },
+  { path: 'register', component: RegisterComponent, canActivate: [ AuthenticationResolver ] },
   { path: '**', component: HttpComponent }
 ];
 
