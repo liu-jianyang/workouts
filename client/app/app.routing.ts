@@ -6,8 +6,9 @@ import { CreditsComponent } from './components/credits/index';
 import { HttpComponent } from './components/http/index';
 import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
+import { RoutinesComponent } from './components/routines/index';
 
-import { AuthenticationResolver } from './services/index';
+import { AuthenticationGuard, ExerciseGridResolver } from './services/index';
 
 const appRoutes: Routes = [
   {
@@ -15,11 +16,12 @@ const appRoutes: Routes = [
     redirectTo: 'exercises',
     pathMatch: 'full'
   },
-  { path: 'exercises', component: ExerciseGridComponent },
+  { path: 'exercises', component: ExerciseGridComponent, resolve: { exercises: ExerciseGridResolver } },
+  { path: 'routines', component: RoutinesComponent },
   { path: 'updates', component: UpdatesComponent },
   { path: 'credits', component: CreditsComponent },
-  { path: 'login', component: LoginComponent, canActivate: [ AuthenticationResolver ] },
-  { path: 'register', component: RegisterComponent, canActivate: [ AuthenticationResolver ] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '**', component: HttpComponent }
 ];
 

@@ -7,7 +7,8 @@
   
   <li class="link"><a routerLink="/credits" routerLinkActive="active">About</a></li>
   <li class="link"><a routerLink="/updates" routerLinkActive="active">Updates</a></li>
-  <li class="link"><a routerLink="/exercises" routerLinkActive="active">Home</a></li>
+  <li class="link" [hidden]="!isLoggedIn"><a routerLink="/routines" routerLinkActive="active">Routines</a></li>
+  <li class="link"><a routerLink="/exercises" routerLinkActive="active">Exercises</a></li>
 </ul>
 <div id="router-container">
   <router-outlet></router-outlet>

@@ -19,8 +19,16 @@ import { UpdatesComponent } from './components/updates/index';
 import { HttpComponent } from './components/http/index';
 import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
+import { RoutinesComponent, RoutineDetailComponent } from './components/routines/index';
 
-import { ExercisesService, NameMappingService, UpdatesService, AuthenticationService, UserService, AuthenticationResolver } from './services/index';
+import { ExercisesService,
+         NameMappingService,
+         UpdatesService,
+         AuthenticationService,
+         UserService,
+         RoutinesService,
+         AuthenticationResolver,
+         ExerciseGridResolver } from './services/index';
 
 @NgModule({
   imports: [
@@ -37,7 +45,9 @@ import { ExercisesService, NameMappingService, UpdatesService, AuthenticationSer
     UpdatesComponent,
     HttpComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    RoutinesComponent,
+    RoutineDetailComponent
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' },
@@ -46,7 +56,9 @@ import { ExercisesService, NameMappingService, UpdatesService, AuthenticationSer
     UpdatesService,
     AuthenticationService,
     UserService,
-    AuthenticationResolver
+    RoutinesService,
+    AuthenticationResolver,
+    ExerciseGridResolver
 
     // providers used to create fake backend
     // fakeBackendProvider,

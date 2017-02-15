@@ -1,0 +1,21 @@
+<h2>My routines</h2>
+
+<ul class="routines">
+  <li *ngFor="let routine of routines" (click)="onSelect(routine)" [class.selected]="routine === selectedRoutine">
+    <span class="routine-element">
+      <span class="badge">{{routine.id}}</span> {{routine.name}}
+    </span>
+    <button class="delete-button" (click)="deleteRoutine(routine, $event)">Delete</button>
+  </li>
+</ul>
+
+<div class="error" *ngIf="error">{{error}}</div>
+
+<button (click)="addRoutine()">Add New Routine</button>
+
+<div *ngIf="addingRoutine">
+  <!-- <routine-new (close)="close($event)"></routine-new> -->
+</div>
+{{selectedRoutine}}
+<routine-detail *ngIf="selectedRoutine" [routine]="selectedRoutine"></routine-detail>
+  

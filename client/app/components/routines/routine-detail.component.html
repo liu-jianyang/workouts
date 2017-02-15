@@ -1,0 +1,10 @@
+<h2>
+  Viewing {{routine.name | uppercase}}
+</h2>
+<table>
+  <tbody>
+    <tr *ngFor="let exercise of routine.exercises">
+      <td>{{exercise.name}}</td>
+    </tr>
+  </tbody>
+</table>
