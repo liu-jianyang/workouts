@@ -1,21 +1,20 @@
-<h2>My routines</h2>
+<div class="routines-container">
+  <h2 class="header">My routines</h2> <button class="routine-add-button" (click)="addRoutine()">Add New Routine</button>
 
-<ul class="routines">
-  <li *ngFor="let routine of routines" (click)="onSelect(routine)" [class.selected]="routine === selectedRoutine">
-    <span class="routine-element">
-      <span class="badge">{{routine.id}}</span> {{routine.name}}
-    </span>
-    <button class="delete-button" (click)="deleteRoutine(routine, $event)">Delete</button>
-  </li>
-</ul>
+  <ul class="routines-list">
+    <li *ngFor="let routine of routines" (click)="onSelect(routine)" [class.selected]="routine === selectedRoutine">
+      <span class="routine-element">
+        {{routine.name}}
+      </span>
+      <button class="routine-delete-button" (click)="deleteRoutine(routine, $event)" [class.selected]="routine === selectedRoutine">x</button>
+    </li>
+  </ul>
 
-<div class="error" *ngIf="error">{{error}}</div>
+  <div class="error" *ngIf="error">{{error}}</div>
 
-<button (click)="addRoutine()">Add New Routine</button>
+  <routine-detail *ngIf="selectedRoutine" [routine]="selectedRoutine"></routine-detail>
+</div>
 
 <div *ngIf="addingRoutine">
-  <!-- <routine-new (close)="close($event)"></routine-new> -->
+  <routine-new></routine-new>
 </div>
-{{selectedRoutine}}
-<routine-detail *ngIf="selectedRoutine" [routine]="selectedRoutine"></routine-detail>
-  

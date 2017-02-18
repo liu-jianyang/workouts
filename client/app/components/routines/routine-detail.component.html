@@ -1,10 +1,11 @@
 <h2>
   Viewing {{routine.name | uppercase}}
 </h2>
-<table>
-  <tbody>
-    <tr *ngFor="let exercise of routine.exercises">
-      <td>{{exercise.name}}</td>
-    </tr>
-  </tbody>
-</table>
+<ul class="exercise-list">
+    <li *ngFor="let exercise of routine.exercises; let i = index;" (click)="onSelect(exercise)" [class.selected]="exercise === selectedExercise">
+      <span class="exercise-element">
+        <span class="badge">{{i+1}}</span> {{exercise.name}}
+      </span>
+      <button class="delete-button" (click)="deleteExercise(exercise, $event)">Delete</button>
+    </li>
+  </ul>

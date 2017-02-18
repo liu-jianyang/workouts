@@ -19,7 +19,8 @@ import { UpdatesComponent } from './components/updates/index';
 import { HttpComponent } from './components/http/index';
 import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
-import { RoutinesComponent, RoutineDetailComponent } from './components/routines/index';
+import { RoutinesComponent, RoutineDetailComponent, RoutineNewComponent } from './components/routines/index';
+import { ModalComponent } from './components/shared/index';
 
 import { ExercisesService,
          NameMappingService,
@@ -47,7 +48,9 @@ import { ExercisesService,
     LoginComponent,
     RegisterComponent,
     RoutinesComponent,
-    RoutineDetailComponent
+    RoutineDetailComponent,
+    RoutineNewComponent,
+    ModalComponent
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' },

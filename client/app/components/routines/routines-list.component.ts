@@ -28,6 +28,7 @@ export class RoutinesComponent implements OnInit {
   }
 
   addRoutine(): void {
+    console.log('addRoutine');
     this.addingRoutine = true;
     this.selectedRoutine = null;
   }
