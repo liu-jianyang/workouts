@@ -1,0 +1,20 @@
+<div class="routines-container">
+  <h2 class="header">My routines</h2> <button class="routine-add-button" (click)="addRoutine()">Add New Routine</button>
+
+  <ul class="routines-list">
+    <li *ngFor="let routine of routines" (click)="onSelect(routine)" [class.selected]="routine === selectedRoutine">
+      <span class="routine-element">
+        {{routine.name}}
+      </span>
+      <button class="routine-delete-button" (click)="deleteRoutine(routine, $event)" [class.selected]="routine === selectedRoutine">x</button>
+    </li>
+  </ul>
+
+  <div class="error" *ngIf="error">{{error}}</div>
+
+  <routine-detail *ngIf="selectedRoutine" [routine]="selectedRoutine"></routine-detail>
+</div>
+
+<div *ngIf="addingRoutine">
+  <routine-new></routine-new>
+</div>
