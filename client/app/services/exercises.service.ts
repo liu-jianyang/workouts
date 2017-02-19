@@ -1,6 +1,8 @@
 import { Injectable }     from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response, Request } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 var progressions = [
@@ -151,7 +153,7 @@ export class ExercisesService {
       let headers = new Headers({
         'Authorization': 'Bearer ' + currentUser.token
       });
-      return new Response(new RequestOptions({
+      return new Request(new RequestOptions({
         headers: headers
       }));
     }

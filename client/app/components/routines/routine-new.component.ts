@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ModalComponent } from '../shared/index';
+import { OnInit } from '@angular/core';
 @Component({
   moduleId: module.id,
   selector: 'routine-new',

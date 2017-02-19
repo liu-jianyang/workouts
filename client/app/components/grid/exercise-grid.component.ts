@@ -21,6 +21,7 @@ function resetSvg() {
 export class ExerciseGridComponent {
   exerciseLists: any[];
   nameMapping = {};
+  isLoaded = false;
   errorMessage: string;
   mode = 'Observable';
   constructor (
@@ -29,6 +30,7 @@ export class ExerciseGridComponent {
     private userService: UserService) {};
 
   ngOnInit() {
+    this.isLoaded = false;
     this.getExercises();
     this.getNameMapping();
     this.getUserExercises();

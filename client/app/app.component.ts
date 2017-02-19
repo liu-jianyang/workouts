@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { UserService, AuthenticationService } from './services/index';
+import { UserService, AuthenticationService, ExercisesService } from './services/index';
 @Component({
   selector:'my-app',
   templateUrl: './app/app.component.html',
@@ -13,7 +13,8 @@ export class AppComponent {
 
   constructor(
     private userService: UserService,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+    private exercisesService: ExercisesService) { }
 
   ngOnInit() {
     this.userService.loggedIn()

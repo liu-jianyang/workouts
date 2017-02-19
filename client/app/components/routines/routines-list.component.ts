@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RoutinesService } from '../../services/index';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   moduleId: module.id,
@@ -18,13 +20,13 @@ export class RoutinesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private routineService: RoutinesService) { }
+    private routinesService: RoutinesService) { }
 
   getRoutines(): void {
-    this.routineService
+    this.routinesService
       .getRoutines()
-      .then(routines => this.routines = routines)
-      .catch(error => this.error = error);
+      .subscribe(routines => this.routines = routines,
+                 error => this.error = error);
   }
 
   addRoutine(): void {
@@ -42,13 +44,13 @@ export class RoutinesComponent implements OnInit {
 
   deleteRoutine(routine, event): void {
     event.stopPropagation();
-    this.routineService
-      .delete(routine)
-      .then(res => {
-        this.routines = this.routines.filter(r => r !== routine);
-        if (this.selectedRoutine === routine) { this.selectedRoutine = null; }
-      })
-      .catch(error => this.error = error);
+    // this.routinesService
+    //   .delete(routine)
+    //   .then(res => {
+    //     this.routines = this.routines.filter(r => r !== routine);
+    //     if (this.selectedRoutine === routine) { this.selectedRoutine = null; }
+    //   })
+    //   .catch(error => this.error = error);
   }
 
   ngOnInit(): void {

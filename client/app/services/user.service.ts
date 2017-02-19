@@ -4,6 +4,7 @@ import {
 import {
   Http,
   Headers,
+  Request,
   RequestOptions,
   Response
 } from '@angular/http';
@@ -11,6 +12,9 @@ import {
 import {
   User
 } from '../models/user';
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class UserService {
@@ -31,7 +35,7 @@ export class UserService {
     return this.http.get('/api/loggedin', this.jwt())
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
-        return response._body === 'true';
+        return response.json() === 'true';
       })
       .catch(this.handleError);
   }
@@ -68,7 +72,7 @@ export class UserService {
       let headers = new Headers({
         'Authorization': 'Bearer ' + currentUser.token
       });
-      return new Response(new RequestOptions({
+      return new Request(new RequestOptions({
         headers: headers
       }));
     }

@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
 import { RoutinesComponent } from './components/routines/index';
 
-import { AuthenticationGuard, ExerciseGridResolver } from './services/index';
+import { ExerciseGridResolver } from './services/index';
 
 const appRoutes: Routes = [
   {
