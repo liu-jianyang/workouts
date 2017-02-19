@@ -63,10 +63,12 @@ function convertToViewFormat(exercisesArray) {
     }
     exerciseLists[progression][exercise.level] = exercise;
   });
-
   LEVELS.forEach(function(levelNum) {
     var row = [];
     progressions.forEach(function(progression) {
+     if (!exerciseLists[progression]) {
+      return;
+     }
       var exercise = exerciseLists[progression][levelNum];
       if (exercise) {
         replaceStringWithElement(exercise, exerciseLists);
@@ -90,7 +92,7 @@ export class ExercisesService {
   constructor (private http: Http) {}
 
   getExercises (): Observable<any[]> {
-    let url = 'api/exercises';
+    let url = '/api/exercises';
     return this.http.get(url)
                     .map(this.extractDataToViewFormat)
                     .catch(this.handleError);

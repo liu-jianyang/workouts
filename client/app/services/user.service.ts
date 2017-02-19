@@ -11,7 +11,7 @@ import {
 
 import {
   User
-} from '../models/user';
+} from '../shared/index';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';

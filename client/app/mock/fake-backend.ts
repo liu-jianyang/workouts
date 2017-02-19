@@ -3,7 +3,8 @@ import {
   BaseRequestOptions,
   Response,
   ResponseOptions,
-  RequestMethod
+  RequestMethod,
+  XHRBackend
 } from '@angular/http';
 import {
   MockBackend,
@@ -13,7 +14,26 @@ import {
 export let fakeBackendProvider = {
   // use fake backend in place of Http service for backend-less development
   provide: Http,
-  useFactory: (backend: MockBackend, options: BaseRequestOptions) => {
+  useFactory: (backend: MockBackend, options: BaseRequestOptions, realBackend: XHRBackend) => {
+
+    function realHttpGet(url, connection, isJson) {
+      let httpRequest = new Http(realBackend, options);
+      httpRequest.get(url)
+                 .map(res => {
+                   if (isJson) {
+                     return res.json();
+                   } else {
+                     return res['_body'];
+                   }
+                 })
+                 .subscribe(data => {
+                   connection.mockRespond(new Response(new ResponseOptions({
+                     status: 200,
+                     body: data
+                   })));
+                 });
+    }
+
     // array in local storage for registered users
     let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
 
@@ -21,7 +41,7 @@ export let fakeBackendProvider = {
     backend.connections.subscribe((connection: MockConnection) => {
       // wrap in timeout to simulate server api call
       setTimeout(() => {
-
+        console.log('requesting %s', connection.request.url);
         // authenticate
         if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
           // get parameters from post request
@@ -145,11 +165,40 @@ export let fakeBackendProvider = {
           }
         }
 
+        if (connection.request.url.endsWith('/api/loggedin') && connection.request.method === RequestMethod.Get) {
+          if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
+            // respond 200 OK
+            connection.mockRespond(new Response(new ResponseOptions({
+              status: 200,
+              body: true
+            })));
+          } else {
+            // return 200 false
+            connection.mockRespond(new Response(new ResponseOptions({
+              status: 200,
+              body: false
+            })));
+          }
+        }
+
+        //exercises
+        if (connection.request.url.endsWith('/api/exercises') && connection.request.method === RequestMethod.Get) {
+          realHttpGet('app/mock/exercises.json', connection, true);
+        }
+
+        if (connection.request.url.endsWith('/api/name-mapping') && connection.request.method === RequestMethod.Get) {
+          realHttpGet('app/mock/name-mapping.json', connection, true);
+        }
+
+        if (connection.request.url.endsWith('CHANGELOG.md') && connection.request.method === RequestMethod.Get) {
+          realHttpGet('app/mock/CHANGELOG.md', connection, false);
+        }
+
       }, 500);
 
     });
 
     return new Http(backend, options);
   },
-  deps: [MockBackend, BaseRequestOptions]
+  deps: [MockBackend, BaseRequestOptions, XHRBackend]
 };

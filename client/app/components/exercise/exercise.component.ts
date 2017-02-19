@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ExercisesService } from '../../services/index';
 
-import { Exercise } from '../../models/index';
+import { Exercise } from '../../shared/index';
 
 //helper functions, it turned out chrome doesn't support Math.sgn() 
 function signum(x) {

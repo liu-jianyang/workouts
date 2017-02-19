@@ -1,100 +1,93 @@
 [
   { 
-    "eid": "hspushups_1", 
-    "progression": "hspushups", 
+    "eid": "hs_1", 
+    "progression": "hs", 
     "level": 1, 
-    "name": "Pike HeSPU", 
+    "name": "hs_1", 
     "prerequisites": ""
   },
   { 
-    "eid": "hspushups_2", 
-    "progression": "hspushups", 
+    "eid": "hs_2", 
+    "progression": "hs", 
     "level": 2, 
-    "name": "Box HeSPU", 
-    "prerequisites": "hspushups_1"
+    "name": "hs_2", 
+    "prerequisites": "hs_1"
   },
   { 
-    "eid": "hspushups_3", 
-    "progression": "hspushups", 
+    "eid": "hs_3", 
+    "progression": "hs", 
     "level": 3, 
-    "name": "Wall HeSPU Ecc", 
-    "prerequisites": "hspushups_2"
+    "name": "hs_3", 
+    "prerequisites": "hs_2"
   },
   { 
-    "eid": "hspushups_4", 
-    "progression": "hspushups", 
+    "eid": "hs_4", 
+    "progression": "hs", 
     "level": 4, 
-    "name": "Wall HeSPU", 
-    "prerequisites": "hspushups_3"
+    "name": "hs_4", 
+    "prerequisites": "hs_3"
   },
   { 
-    "eid": "hspushups_5", 
-    "progression": "hspushups", 
+    "eid": "hs_5", 
+    "progression": "hs", 
     "level": 5, 
-    "name": "Wall HSPU", 
-    "prerequisites": "hspushups_4"
+    "name": "hs_5", 
+    "prerequisites": "hs_4"
   },
   { 
-    "eid": "hspushups_6", 
-    "progression": "hspushups", 
+    "eid": "hs_6", 
+    "progression": "hs", 
     "level": 6, 
-    "name": "Free HeSPU", 
-    "prerequisites": "hspushups_5"
+    "name": "hs_6", 
+    "prerequisites": "hs_5"
   },
   { 
-    "eid": "hspushups_7", 
-    "progression": "hspushups", 
+    "eid": "hs_7", 
+    "progression": "hs", 
     "level": 7, 
-    "name": "Free HSPU", 
-    "prerequisites": "hspushups_6"
+    "name": "hs_7", 
+    "prerequisites": "hs_6"
   },
   { 
-    "eid": "ringshs_5", 
-    "progression": "ringshs", 
+    "eid": "rhs_5", 
+    "progression": "rhs", 
     "level": 5, 
-    "name": "R Shld Std", 
-    "prerequisites": "hspushups_5"
+    "name": "rhs_5", 
+    "prerequisites": "hs_5"
   },
   { 
-    "eid": "ringshs_6", 
-    "progression": "ringshs", 
+    "eid": "rhs_6", 
+    "progression": "rhs", 
     "level": 6, 
-    "name": "R Strap HS", 
-    "prerequisites": "ringshs_5"
+    "name": "rhs_6", 
+    "prerequisites": "rhs_5"
   },
   { 
-    "eid": "ringshs_7", 
-    "progression": "ringshs", 
+    "eid": "rhs_7", 
+    "progression": "rhs", 
     "level": 7, 
-    "name": "R HS", 
-    "prerequisites": "ringshs_6"
+    "name": "rhs_7", 
+    "prerequisites": "rhs_6"
   },
   { 
     "eid": "manna_1", 
     "progression": "manna", 
     "level": 1, 
-    "name": "Tuck L-sit", 
+    "name": "manna_1", 
     "prerequisites": ""
   },
   { 
     "eid": "manna_2", 
     "progression": "manna", 
     "level": 2, 
-    "name": "1 Leg Bent L-sit", 
+    "name": "manna_2", 
     "prerequisites": "manna_1"
-  },
-  { 
-    "eid": "manna_3", 
-    "progression": "manna", 
-    "level": 3, 
-    "name": "L-sit", 
-    "prerequisites": "manna_2"
   },
   { 
     "eid": "manna_4", 
     "progression": "manna", 
     "level": 4, 
-    "name": "Straddle L-sit", 
-    "prerequisites": "manna_3"
+    "name": "manna_4", 
+    "prerequisites": "manna_2"
   }
 ]

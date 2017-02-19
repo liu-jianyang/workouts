@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     redirectTo: 'exercises',
     pathMatch: 'full'
   },
-  { path: 'exercises', component: ExerciseGridComponent, resolve: { exercises: ExerciseGridResolver } },
+  { path: 'exercises', component: ExerciseGridComponent },
   { path: 'routines', component: RoutinesComponent },
   { path: 'updates', component: UpdatesComponent },
   { path: 'credits', component: CreditsComponent },

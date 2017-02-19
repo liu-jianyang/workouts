@@ -1,5 +1,5 @@
 import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Request, RequestOptions, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,7 +16,7 @@ export class RoutinesService {
   }
 
   getRoutine(routineID): Observable<any[]> {
-    let url = 'app/mock/routine.json';
+    let url = 'api/routine/' + routineID;
     return this.http.get(url, this.jwt())
                     .map(this.extractData)
                     .catch(this.handleError);

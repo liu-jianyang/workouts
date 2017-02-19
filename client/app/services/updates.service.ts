@@ -43,7 +43,7 @@ export class UpdatesService {
                     .catch(this.handleError);
   }
   private extractData(res: Response) {
-    return convertToViewFormat(res.json()) || { };
+    return convertToViewFormat(res['_body']) || { };
   }
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

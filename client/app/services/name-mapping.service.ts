@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class NameMappingService {
-  private url = 'api/name-mapping';
+  private url = '/api/name-mapping';
   // url = 'app/mock/name-mapping.json';
   constructor (private http: Http) {}
   getNameMapping (): Observable<any[]> {
