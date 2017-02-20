@@ -35,7 +35,7 @@ export class UserService {
     return this.http.get('/api/loggedin', this.jwt())
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
-        return response.json() === 'true';
+        return response.json();
       })
       .catch(this.handleError);
   }
@@ -68,10 +68,12 @@ export class UserService {
   private jwt() {
     // create authorization header with jwt token
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log('currentUser:', currentUser);
     if (currentUser && currentUser.token) {
       let headers = new Headers({
         'Authorization': 'Bearer ' + currentUser.token
       });
+      console.log('headers:', headers.get('Authorization'));
       return new Request(new RequestOptions({
         headers: headers
       }));
