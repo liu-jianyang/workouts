@@ -8,6 +8,7 @@ export class ExerciseGridResolver implements Resolve<any> {
   constructor(private service: ExercisesService) {}
 
   resolve(route: ActivatedRouteSnapshot) {
+    console.log('resolve ExerciseGridResolver');
     return this.service.getUserExercises();
   }
 

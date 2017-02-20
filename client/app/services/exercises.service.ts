@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions, Response, Request } from '@angular/http'
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
 
 const LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 var progressions = [
@@ -115,7 +116,7 @@ export class ExercisesService {
   }
 
   setUserExercises(exercises): Observable<any[]> {
-    return this.http.post('/api/user-exercises', exercises, this.jwt())
+    return this.http.post('/api/user/exercises', exercises, this.jwt())
       .map((res: Response) => {
         for (let i = 0; i < exercises.length; i++) {
           let e = exercises[i];
@@ -127,7 +128,10 @@ export class ExercisesService {
   }
 
   getUserExercises(): Observable<any[]> {
-    return this.http.get('/api/user-exercises', this.jwt())
+    if (this.userExercises) {
+      return Observable.of(this.userExercises);
+    }
+    return this.http.get('/api/user/exercises', this.jwt())
       .map((res: Response) => {
         this.userExercises = {};
         let body = res.json();
@@ -135,6 +139,7 @@ export class ExercisesService {
           let exercise = body[i];
           this.userExercises[exercise.id] = exercise.points;
         }
+        console.log('returning:', this.userExercises);
         return this.userExercises;
       })
       .catch(this.handleError);

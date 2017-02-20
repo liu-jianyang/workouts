@@ -45,6 +45,7 @@ export class ExerciseGridComponent {
   };
 
   getUserExercises() {
+    console.log('getting user exercises');
     this.exercisesService.getUserExercises()
       .subscribe(
         userExercises => this.isLoaded = true,

@@ -11,6 +11,7 @@ import { UserService } from '../../services/index';
 export class RegisterComponent {
   model: any = {};
   loading = false;
+  registerError;
 
   constructor(
     private router: Router,
@@ -18,6 +19,7 @@ export class RegisterComponent {
 
   register() {
     this.loading = true;
+    this.registerError = '';
     this.userService.create(this.model)
       .subscribe(
         data => {
@@ -27,6 +29,7 @@ export class RegisterComponent {
         },
         error => {
           console.log('Failure:', error);
+          this.registerError = error;
           this.loading = false;
         });
   }

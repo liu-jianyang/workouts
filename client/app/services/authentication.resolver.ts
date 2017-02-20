@@ -12,6 +12,7 @@ export class AuthenticationResolver implements Resolve<any> {
   ) {}
 
   resolve(): Observable<any> {
+    console.log('resolve AuthenticationResolver');
     return this.us.loggedIn();
   }
 }

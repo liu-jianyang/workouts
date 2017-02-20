@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
 import { RoutinesComponent } from './components/routines/index';
 
-import { ExerciseGridResolver } from './services/index';
+import { ExerciseGridResolver, AuthenticationResolver } from './services/index';
 
 const appRoutes: Routes = [
   {
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     redirectTo: 'exercises',
     pathMatch: 'full'
   },
-  { path: 'exercises', component: ExerciseGridComponent },
+  { path: 'exercises', component: ExerciseGridComponent, resolve: {userExercises: ExerciseGridResolver} },
   { path: 'routines', component: RoutinesComponent },
   { path: 'updates', component: UpdatesComponent },
   { path: 'credits', component: CreditsComponent },

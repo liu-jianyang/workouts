@@ -12,9 +12,10 @@ import {
 import {
   User
 } from '../shared/index';
-import { Observable }     from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class UserService {
@@ -68,7 +69,6 @@ export class UserService {
   private jwt() {
     // create authorization header with jwt token
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log('currentUser:', currentUser);
     if (currentUser && currentUser.token) {
       let headers = new Headers({
         'Authorization': 'Bearer ' + currentUser.token

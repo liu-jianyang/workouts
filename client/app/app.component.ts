@@ -10,6 +10,7 @@ import { UserService, AuthenticationService, ExercisesService } from './services
 export class AppComponent {
   title = 'Bodyweight exercises';
   private isLoggedIn = false;
+  private isLoading = true;
 
   constructor(
     private userService: UserService,
@@ -17,14 +18,17 @@ export class AppComponent {
     private exercisesService: ExercisesService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.userService.loggedIn()
       .subscribe(
         data => {
           this.isLoggedIn = data;
+          this.isLoading = false;
         },
         error => {
           console.log('Failure checking if user is logged in:', error);
           this.isLoggedIn = false;
+          this.isLoading = false;
         });
   }
 

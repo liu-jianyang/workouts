@@ -1,20 +1,20 @@
-import express = require('express');
-import path = require('path');
-import favicon = require('serve-favicon');
-import logger = require('morgan';
-import cookieParser = require('cookie-parser');
-import bodyParser = require('body-parser');
-import sqlite3 = require('sqlite3');
-import Q = require('q');
-import bcrypt = require('bcryptjs');
-import methodOverride = require('method-override');
-import session = require('express-session');
-import passport = require('passport');
-import LocalStrategy = require('passport-local');
-import jwt = require('jsonwebtoken');
-import moment = require('moment');
-import fs = require('fs');
-import path = require('path');
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan';
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var sqlite3 = require('sqlite3');
+var Q = require('q');
+var bcrypt = require('bcryptjs');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var jwt = require('jsonwebtoken');
+var moment = require('moment');
+var fs = require('fs');
+var path = require('path');
 
 var port: number = process.env.PORT || 3000;
 var app = express();
@@ -56,6 +56,7 @@ function signUsername(username) {
     token: token
   });
 }
+
 function localAuth(username, password) {
   var deferred = Q.defer();
   db.get('SELECT * from USERS where username = $username', {$username: username}, function(err, result) {

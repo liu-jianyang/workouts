@@ -11,6 +11,7 @@ import { AuthenticationService } from '../../services/index';
 export class LoginComponent implements OnInit {
   model: any = {};
   loading = false;
+  loginError;
   returnUrl: string;
 
   constructor(
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.loginError = '';
     this.loading = true;
     this.authenticationService.login(this.model.username, this.model.password)
       .subscribe(
@@ -31,7 +33,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          console.log('err:', error);
+          console.log('Login error:', error);
+          this.loginError = error;
           this.loading = false;
         });
   }

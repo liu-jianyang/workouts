@@ -168,6 +168,21 @@ export let fakeBackendProvider = {
           realHttpGet('app/mock/exercises.json', connection, true);
         }
 
+        if (connection.request.url.endsWith('/api/user/exercises') && connection.request.method === RequestMethod.Get) {
+          connection.mockRespond(new Response(new ResponseOptions({
+            status: 200,
+            body: JSON.parse(localStorage.getItem('userExercises')) || []
+          })));
+        }
+
+        if (connection.request.url.endsWith('/api/user/exercises') && connection.request.method === RequestMethod.Post) {
+          let userExercises = JSON.parse(connection.request.getBody());
+          localStorage.setItem('userExercises', JSON.stringify(userExercises));
+          connection.mockRespond(new Response(new ResponseOptions({
+            status: 200
+          })));
+        }
+
         if (connection.request.url.endsWith('/api/name-mapping') && connection.request.method === RequestMethod.Get) {
           realHttpGet('app/mock/name-mapping.json', connection, true);
         }
