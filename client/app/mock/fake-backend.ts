@@ -11,6 +11,11 @@ import {
   MockConnection
 } from '@angular/http/testing';
 
+var getRequestMethod = {};
+getRequestMethod[RequestMethod.Get] = 'GET';
+getRequestMethod[RequestMethod.Post] = 'POST';
+getRequestMethod[RequestMethod.Delete] = 'DELETE';
+
 export let fakeBackendProvider = {
   // use fake backend in place of Http service for backend-less development
   provide: Http,
@@ -41,7 +46,7 @@ export let fakeBackendProvider = {
     backend.connections.subscribe((connection: MockConnection) => {
       // wrap in timeout to simulate server api call
       setTimeout(() => {
-        console.log('requesting %s', connection.request.url);
+        console.log('%s %s', getRequestMethod[connection.request.method], connection.request.url);
 
         // authenticate
         if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
@@ -72,7 +77,7 @@ export let fakeBackendProvider = {
         }
 
         // logout user
-        if (connection.request.url.endsWith('/api/logout') && connection.request.method === RequestMethod.Post) {
+        else if (connection.request.url.endsWith('/api/logout') && connection.request.method === RequestMethod.Post) {
           // get new user object from post body
           let params = JSON.parse(connection.request.getBody());
           // validation
@@ -90,7 +95,7 @@ export let fakeBackendProvider = {
         }
 
         // create user
-        if (connection.request.url.endsWith('/api/local-reg') && connection.request.method === RequestMethod.Post) {
+        else if (connection.request.url.endsWith('/api/local-reg') && connection.request.method === RequestMethod.Post) {
           // get new user object from post body
           let newUser = JSON.parse(connection.request.getBody());
           // validation
@@ -119,7 +124,7 @@ export let fakeBackendProvider = {
         }
 
         // delete user
-        if (connection.request.url.match(/\/api\/users\/\d+$/) && connection.request.method === RequestMethod.Delete) {
+        else if (connection.request.url.match(/\/api\/users\/\d+$/) && connection.request.method === RequestMethod.Delete) {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
           if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
             // find user by id in users array
@@ -147,7 +152,7 @@ export let fakeBackendProvider = {
           }
         }
 
-        if (connection.request.url.endsWith('/api/loggedin') && connection.request.method === RequestMethod.Get) {
+        else if (connection.request.url.endsWith('/api/loggedin') && connection.request.method === RequestMethod.Get) {
           if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
             // respond 200 OK
             connection.mockRespond(new Response(new ResponseOptions({
@@ -164,18 +169,27 @@ export let fakeBackendProvider = {
         }
 
         //exercises
-        if (connection.request.url.endsWith('/api/exercises') && connection.request.method === RequestMethod.Get) {
+        else if (connection.request.url.endsWith('/api/exercises') && connection.request.method === RequestMethod.Get) {
           realHttpGet('app/mock/exercises.json', connection, true);
         }
 
-        if (connection.request.url.endsWith('/api/user/exercises') && connection.request.method === RequestMethod.Get) {
+        else if (connection.request.url.endsWith('/api/name-mapping') && connection.request.method === RequestMethod.Get) {
+          realHttpGet('app/mock/name-mapping.json', connection, true);
+        }
+
+        else if (connection.request.url.endsWith('CHANGELOG.md') && connection.request.method === RequestMethod.Get) {
+          realHttpGet('app/mock/CHANGELOG.md', connection, false);
+        }
+
+        // User specific information
+        else if (connection.request.url.endsWith('/api/user/exercises') && connection.request.method === RequestMethod.Get) {
           connection.mockRespond(new Response(new ResponseOptions({
             status: 200,
             body: JSON.parse(localStorage.getItem('userExercises')) || []
           })));
         }
 
-        if (connection.request.url.endsWith('/api/user/exercises') && connection.request.method === RequestMethod.Post) {
+        else if (connection.request.url.endsWith('/api/user/exercises') && connection.request.method === RequestMethod.Post) {
           let userExercises = JSON.parse(connection.request.getBody());
           localStorage.setItem('userExercises', JSON.stringify(userExercises));
           connection.mockRespond(new Response(new ResponseOptions({
@@ -183,12 +197,72 @@ export let fakeBackendProvider = {
           })));
         }
 
-        if (connection.request.url.endsWith('/api/name-mapping') && connection.request.method === RequestMethod.Get) {
-          realHttpGet('app/mock/name-mapping.json', connection, true);
+        else if (connection.request.url.endsWith('/api/user/routines') && connection.request.method === RequestMethod.Get) {
+          console.log('get:', JSON.parse(localStorage.getItem('routines')));
+          connection.mockRespond(new Response(new ResponseOptions({
+            status: 200,
+            body: JSON.parse(localStorage.getItem('routines')) || []
+          })));
         }
 
-        if (connection.request.url.endsWith('CHANGELOG.md') && connection.request.method === RequestMethod.Get) {
-          realHttpGet('app/mock/CHANGELOG.md', connection, false);
+        else if (connection.request.url.endsWith('/api/user/routines') && connection.request.method === RequestMethod.Post) {
+          let params = JSON.parse(connection.request.getBody());
+          let routines: any[] = JSON.parse(localStorage.getItem('routines')) || [];
+          if (params.id !== undefined) {
+            let index = routines.findIndex(routine => {
+              return routine.id === params.id;
+            });
+            if (index !== -1) {
+              // if routine exists replace
+              routines[index] = params;
+            } else {
+              return connection.mockError(new Error('Routine with the given id does not exist'));
+            }
+          } else {
+            let routine = {
+              id: routines.length + 1,
+              name: params.routineName,
+              exercises: params.exercises,
+              user: params.user
+            }
+            routines.push(routine);
+          }
+          localStorage.setItem('routines', JSON.stringify(routines));
+          console.log('set:', routines);
+          connection.mockRespond(new Response(new ResponseOptions({
+            status: 200
+          })));
+        }
+
+        else if (connection.request.url.match(/\/api\/user\/routine\/\d+$/) && connection.request.method === RequestMethod.Delete) {
+          if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
+            // find user by id in users array
+            let urlParts = connection.request.url.split('/');
+            let id = parseInt(urlParts[urlParts.length - 1]);
+            let routines: any[] = JSON.parse(localStorage.getItem('routines')) || [];
+            if (id !== undefined) {
+              let index = routines.findIndex(routine => {
+                return routine.id === id;
+              });
+
+              if (index !== -1) {
+                // if routine exists replace
+                routines.splice(index, 1);
+                localStorage.setItem('routines', JSON.stringify(routines));
+                connection.mockRespond(new Response(new ResponseOptions({
+                  status: 200
+                })));
+              } else {
+                return connection.mockError(new Error('Routine DELETE: Routine with the given id does not exist'));
+              }
+            } else {
+              return connection.mockError(new Error('Routine DELETE: No routine id passed in'));
+            }
+          }
+        }
+
+        else {
+          console.log('Not handled:', connection.request.url);
         }
 
       }, 500);

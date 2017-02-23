@@ -6,21 +6,59 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class RoutinesService {
+  private addingRoutine = false;
+  private routines = [];
+
   constructor (private http: Http) {}
 
-  getRoutines (): Observable<any[]> {
-    let url = 'api/routines';
+  loadRoutines (): Observable<any[]> {
+    console.log('load routines');
+    let url = '/api/user/routines';
     return this.http.get(url, this.jwt())
-                    .map(this.extractData)
-                    .catch(this.handleError);
+      .map((res: Response) => {
+        console.log('res:', res);
+        this.routines = res.json();
+        console.log('routines:', this.routines);
+      })
+      .catch(this.handleError);
+  }
+
+  getRoutines() {
+    return this.routines;
   }
 
   getRoutine(routineID): Observable<any[]> {
-    let url = 'api/routine/' + routineID;
+    let url = '/api/user/routine/' + routineID;
     return this.http.get(url, this.jwt())
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+
+  setRoutine(routine) {
+    console.log('setRoutine');
+    return this.http.post('/api/user/routines', routine, this.jwt())
+      .map((res: Response) => {
+        this.loadRoutines();
+      })
+      .catch(this.handleError);
+  }
+
+  deleteRoutine(routineID) {
+    return this.http.delete('/api/user/routine/' + routineID, this.jwt())
+      .map((res: Response) => {
+        this.loadRoutines();
+      })
+      .catch(this.handleError);
+  }
+
+  getAddingRoutine(): boolean {
+    return this.addingRoutine;
+  }
+
+  setAddingRoutine(bool: boolean) {
+    this.addingRoutine = bool;
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || { };

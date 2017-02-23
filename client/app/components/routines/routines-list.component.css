@@ -1,13 +1,10 @@
-.header {
-  display:inline-block;
-}
 .selected {
   background-color: #CFD8DC !important;
   background-color: rgb(0,120,215) !important;
   color: white !important;
 }
 .routines-container {
-  padding-left: 20px;
+  border-right: 1px solid #333;
 }
 .routines-list {
   margin: 0 0 2em 0;
@@ -22,7 +19,6 @@
   background-color: #EEE;
   margin: .5em;
   padding: .5em;
-  height: 1.6em;
   border-radius: 4px;
 }
 .routines-list li:hover {
@@ -67,7 +63,9 @@ button.routine-add-button:hover {
   background-color: #cfd8dc;
 }
 button.routine-add-button {
-  display: inline-block;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
 }
 .error {color:red;}
 button.routine-delete-button {
@@ -76,4 +74,15 @@ button.routine-delete-button {
   right: 0;
   padding: .1em .4em .3em .5em;
   color:grey;
+}
+.header-container {
+  padding-top: 20px;
+  margin-top: 1px;
+  display: table;
+  padding-bottom: 5px;
+}
+
+.routine-header {
+  display: table-cell;
+  vertical-align: middle;
 }

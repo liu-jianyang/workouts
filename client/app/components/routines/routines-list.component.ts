@@ -14,7 +14,6 @@ import 'rxjs/add/operator/catch';
 export class RoutinesComponent implements OnInit {
   routines = [];
   selectedRoutine;
-  addingRoutine = false;
   error: any;
   showNgFor = false;
 
@@ -22,44 +21,37 @@ export class RoutinesComponent implements OnInit {
     private router: Router,
     private routinesService: RoutinesService) { }
 
-  getRoutines(): void {
+  getRoutines() {
+    return this.routinesService.getRoutines();
+  }
+
+  addingRoutine(): boolean {
+    return this.routinesService.getAddingRoutine();
+  }
+
+  openRoutineModal(): void {
+    this.routinesService.setAddingRoutine(true);
+  }
+
+  deleteRoutine(routine, event): void {
+    console.log('routine:', routine);
+    event.stopPropagation();
     this.routinesService
-      .getRoutines()
+      .deleteRoutine(routine.id)
+       .subscribe(error => this.error = error);
+  }
+
+  ngOnInit(): void {
+    this.routinesService
+      .loadRoutines()
       .subscribe(routines => this.routines = routines,
                  error => this.error = error);
   }
 
-  addRoutine(): void {
-    console.log('addRoutine');
-    this.addingRoutine = true;
-    this.selectedRoutine = null;
-  }
-
-  close(savedRoutine): void {
-    this.addingRoutine = false;
-    if (savedRoutine) { 
-      this.getRoutines(); 
-    }
-  }
-
-  deleteRoutine(routine, event): void {
-    event.stopPropagation();
-    // this.routinesService
-    //   .delete(routine)
-    //   .then(res => {
-    //     this.routines = this.routines.filter(r => r !== routine);
-    //     if (this.selectedRoutine === routine) { this.selectedRoutine = null; }
-    //   })
-    //   .catch(error => this.error = error);
-  }
-
-  ngOnInit(): void {
-    this.getRoutines();
-  }
-
   onSelect(routine): void {
+    console.log('select:', routine);
     this.selectedRoutine = routine;
-    this.addingRoutine = false;
+    this.routinesService.setAddingRoutine(false);
   }
 
   gotoDetail(): void {
