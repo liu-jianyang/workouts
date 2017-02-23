@@ -1,5 +1,14 @@
 # workouts changelog #
 
+# 2.1.0
+ - Routines tab added
+ - New routines can be created (barebone)
+ - Routines can be viewed (barebone)
+
+# 2.0.0
+ - Shifted back to old way of working due to speedier round time results
+ - Setup mock-backend to test server responses and skipping server side work for now
+
 # 1.1.0
  - Added Registration
  - Added Login
