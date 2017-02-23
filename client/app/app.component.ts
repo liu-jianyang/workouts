@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { UserService, AuthenticationService } from './services/index';
+import { UserService, AuthenticationService, ExercisesService } from './services/index';
 @Component({
   selector:'my-app',
   templateUrl: './app/app.component.html',
@@ -10,13 +11,17 @@ import { UserService, AuthenticationService } from './services/index';
 export class AppComponent {
   title = 'Bodyweight exercises';
   private isLoggedIn = false;
+  private isLoading = true;
+  private router: Router;
 
   constructor(
     private userService: UserService,
-    private authenticationService: AuthenticationService) { }
-
-  ngOnInit() {
-    this.userService.loggedIn()
+    private authenticationService: AuthenticationService,
+    private exercisesService: ExercisesService,
+    router: Router) {
+    this.router = router;
+    this.router.events.subscribe((event) => {
+      this.userService.loggedIn()
       .subscribe(
         data => {
           this.isLoggedIn = data;
@@ -24,6 +29,22 @@ export class AppComponent {
         error => {
           console.log('Failure checking if user is logged in:', error);
           this.isLoggedIn = false;
+        });
+});
+  }
+
+  ngOnInit() {
+    this.isLoading = true;
+    this.userService.loggedIn()
+      .subscribe(
+        data => {
+          this.isLoggedIn = data;
+          this.isLoading = false;
+        },
+        error => {
+          console.log('Failure checking if user is logged in:', error);
+          this.isLoggedIn = false;
+          this.isLoading = false;
         });
   }
 

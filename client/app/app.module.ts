@@ -5,9 +5,9 @@ import { HttpModule }     from '@angular/http';
 import {APP_BASE_HREF} from '@angular/common';
 
 //Used to create fake backend
-// import { fakeBackendProvider } from './mock/index';
-// import { MockBackend, MockConnection } from '@angular/http/testing';
-// import { BaseRequestOptions } from '@angular/http';
+import { fakeBackendProvider } from './mock/index';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { routing }       from './app.routing';
@@ -20,7 +20,7 @@ import { HttpComponent } from './components/http/index';
 import { LoginComponent } from './components/login/index';
 import { RegisterComponent } from './components/register/index';
 import { RoutinesComponent, RoutineDetailComponent, RoutineNewComponent } from './components/routines/index';
-import { ModalComponent } from './components/shared/index';
+import { ModalComponent } from './shared/index';
 
 import { ExercisesService,
          NameMappingService,
@@ -61,12 +61,12 @@ import { ExercisesService,
     UserService,
     RoutinesService,
     AuthenticationResolver,
-    ExerciseGridResolver
+    ExerciseGridResolver,
 
     // providers used to create fake backend
-    // fakeBackendProvider,
-    // MockBackend,
-    // BaseRequestOptions
+    fakeBackendProvider,
+    MockBackend,
+    BaseRequestOptions
   ],
   bootstrap: [AppComponent]
 })

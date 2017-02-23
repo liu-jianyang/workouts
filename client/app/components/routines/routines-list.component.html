@@ -1,20 +1,32 @@
-<div class="routines-container">
-  <h2 class="header">My routines</h2> <button class="routine-add-button" (click)="addRoutine()">Add New Routine</button>
+<div class="container">
+  <div class="header-container">
+    <h2 class="routine-header">My routines</h2> &nbsp;
+    <button class="routine-add-button" (click)="openRoutineModal()">Add New Routine</button>
+  </div>
+  <div class="routines-container col-md-6">
+    <div class="error" *ngIf="error">{{error}}</div>
+    <ul class="routines-list">
+      <li *ngFor="let routine of getRoutines()" (click)="onSelect(routine)" [class.selected]="routine === selectedRoutine">
+        <span class="routine-element">
+          {{routine.name}}
+        </span>
+        <button class="routine-delete-button" (click)="deleteRoutine(routine, $event)" [class.selected]="routine === selectedRoutine">x</button>
+        <ul class="exercises-list">
+          <li *ngFor="let exercise of routine.exercises">
+            <span class="exercise-element">
+              {{exercise.name}}
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 
-  <ul class="routines-list">
-    <li *ngFor="let routine of routines" (click)="onSelect(routine)" [class.selected]="routine === selectedRoutine">
-      <span class="routine-element">
-        {{routine.name}}
-      </span>
-      <button class="routine-delete-button" (click)="deleteRoutine(routine, $event)" [class.selected]="routine === selectedRoutine">x</button>
-    </li>
-  </ul>
-
-  <div class="error" *ngIf="error">{{error}}</div>
-
-  <routine-detail *ngIf="selectedRoutine" [routine]="selectedRoutine"></routine-detail>
+  <div class="routine-detail-container col-md-6">
+    <routine-detail *ngIf="selectedRoutine" [routine]="selectedRoutine"></routine-detail>
+  </div>
 </div>
 
-<div *ngIf="addingRoutine">
+<div *ngIf="addingRoutine()">
   <routine-new></routine-new>
 </div>

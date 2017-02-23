@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RoutinesService } from '../../services/index';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   moduleId: module.id,
@@ -12,52 +14,44 @@ import { RoutinesService } from '../../services/index';
 export class RoutinesComponent implements OnInit {
   routines = [];
   selectedRoutine;
-  addingRoutine = false;
   error: any;
   showNgFor = false;
 
   constructor(
     private router: Router,
-    private routineService: RoutinesService) { }
+    private routinesService: RoutinesService) { }
 
-  getRoutines(): void {
-    this.routineService
-      .getRoutines()
-      .then(routines => this.routines = routines)
-      .catch(error => this.error = error);
+  getRoutines() {
+    return this.routinesService.getRoutines();
   }
 
-  addRoutine(): void {
-    console.log('addRoutine');
-    this.addingRoutine = true;
-    this.selectedRoutine = null;
+  addingRoutine(): boolean {
+    return this.routinesService.getAddingRoutine();
   }
 
-  close(savedRoutine): void {
-    this.addingRoutine = false;
-    if (savedRoutine) { 
-      this.getRoutines(); 
-    }
+  openRoutineModal(): void {
+    this.routinesService.setAddingRoutine(true);
   }
 
   deleteRoutine(routine, event): void {
+    console.log('routine:', routine);
     event.stopPropagation();
-    this.routineService
-      .delete(routine)
-      .then(res => {
-        this.routines = this.routines.filter(r => r !== routine);
-        if (this.selectedRoutine === routine) { this.selectedRoutine = null; }
-      })
-      .catch(error => this.error = error);
+    this.routinesService
+      .deleteRoutine(routine.id)
+       .subscribe(error => this.error = error);
   }
 
   ngOnInit(): void {
-    this.getRoutines();
+    this.routinesService
+      .loadRoutines()
+      .subscribe(routines => this.routines = routines,
+                 error => this.error = error);
   }
 
   onSelect(routine): void {
+    console.log('select:', routine);
     this.selectedRoutine = routine;
-    this.addingRoutine = false;
+    this.routinesService.setAddingRoutine(false);
   }
 
   gotoDetail(): void {

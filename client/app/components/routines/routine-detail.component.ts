@@ -21,17 +21,18 @@ export class RoutineDetailComponent implements OnInit {
   ngOnInit(): void {
     this.routineService
       .getRoutine(this.routine.id)
-      .then(routine => {
-        let keys = Object.keys(routine);
-        for (let i = 0; i < keys.length; i++) {
-          let key = keys[i];
-          if (this.routine[key]) {
-            if (this.routine[key] !== routine[key]) throw new Error('ngOnInit: Keys do not match');
-          } else {
-            this.routine[key] = routine[key];
+      .subscribe(
+        routine => {
+          let keys = Object.keys(routine);
+          for (let i = 0; i < keys.length; i++) {
+            let key = keys[i];
+            if (this.routine[key]) {
+              if (this.routine[key] !== routine[key]) throw new Error('ngOnInit: Keys do not match');
+            } else {
+              this.routine[key] = routine[key];
+            }
           }
-        }
-      })
-      .catch(error => this.error = error);
+        },
+        error => this.error = error);
   }
 }

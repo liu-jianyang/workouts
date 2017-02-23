@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ExercisesService } from '../../services/index';
 
+import { Exercise } from '../../shared/index';
+
 //helper functions, it turned out chrome doesn't support Math.sgn() 
 function signum(x) {
     return (x < 0) ? -1 : 1;
@@ -26,12 +28,12 @@ function drawPath(svg, path, startX, startY, endX, endY) {
                             ' L' + endX + ' ' + endY );
 }
 
-function connectElements(exercise, startElem, endElem) {
+function connectElements(exercisePaths, startElem, endElem) {
   var svgContainer = document.getElementById('svg-container');
   var svg = document.getElementById('svg');
   var path = document.getElementById('path');
   var newPath = path.cloneNode(true);
-  newPath.id = 'path';
+  newPath['id'] = 'path';
   svg.appendChild(newPath);
 
   // if first element is lower than the second, swap!
@@ -41,7 +43,7 @@ function connectElements(exercise, startElem, endElem) {
     endElem = temp;
   }
 
-  exercise.paths.push({path: newPath, startElem: startElem});
+  exercisePaths.push({path: newPath, startElem: startElem});
 
   // get (top, left) corner coordinates of the svg container   
   var svgTop  = svgContainer.offsetTop;
@@ -62,12 +64,12 @@ function connectElements(exercise, startElem, endElem) {
 
 
 
-function drawConnectors(exercise, exercisesToConnect) {
+function drawConnectors(exercise, exercisesToConnect, exercisePaths) {
   var element = document.getElementById(exercise.id);
   // connect all the paths you want!
   exercisesToConnect.forEach(function(e) {
     let elementToConnect = document.getElementById(e);
-    connectElements(exercise, elementToConnect, element);
+    connectElements(exercisePaths, elementToConnect, element);
   });
 }
 
@@ -83,9 +85,11 @@ function movePopup(popup, element) {
 })
 
 export class ExerciseComponent {
-  private _exercise = {};
+  private _exercise: Exercise;
   private _prereqs = [];
+  private oldPoints;
   private exerciseInfo;
+  private exercisePaths = [];
   private errorMessage;
   private showPrerequisites = false;
   private completedExercise = false;
@@ -125,7 +129,6 @@ export class ExerciseComponent {
     this._exercise = exercise;
     this._exercise.maxPoints = 1;
     this._exercise.currentPoints = 0;
-    this._exercise.paths = [];
     this._exercise.prerequisites = exercise.prerequisites || [];
   };
 
@@ -158,7 +161,7 @@ export class ExerciseComponent {
       this._prereqs.forEach(function(prereq) {
         ids.push(prereq.id);
       });
-      drawConnectors(this._exercise, ids);
+      drawConnectors(this._exercise, ids, this.exercisePaths);
       this.hasDrawnLines = true;
     }
   }
@@ -208,7 +211,7 @@ export class ExerciseComponent {
       this.popup.style.left = this.element.clientWidth - 30 + 'px';
     }
     
-    this._exercise.paths.forEach(function(e) {
+    this.exercisePaths.forEach(function(e) {
       var path = e.path;
       if (path.getAttribute('stroke') !== 'gold') {
         path.setAttribute('stroke', 'yellow');
@@ -219,7 +222,7 @@ export class ExerciseComponent {
   onMouseLeave() {
     event.preventDefault();
     this.mouseOver = false;
-    this._exercise.paths.forEach(function(e) {
+    this.exercisePaths.forEach(function(e) {
       var path = e.path;
       if (path.getAttribute('stroke') !== 'gold') {
         path.setAttribute('stroke', 'black');
@@ -236,7 +239,7 @@ export class ExerciseComponent {
   };
 
   updatePaths() {
-    this._exercise.paths.forEach(function(e) {
+    this.exercisePaths.forEach(function(e) {
       var path = e.path,
           startElem = e.startElem;
       if (startElem.children[0].className.indexOf('exercise-completed') !== -1) {
