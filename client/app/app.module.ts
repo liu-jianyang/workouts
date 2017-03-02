@@ -10,6 +10,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
 
 import { AppComponent }  from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { routing }       from './app.routing';
 
 import { ExerciseComponent } from './components/exercise/index';
@@ -36,7 +37,8 @@ import { ExercisesService,
     BrowserModule,
     HttpModule,
     FormsModule,
-    routing
+    routing,
+    NgbModule.forRoot()
     ],
   declarations: [
     AppComponent,

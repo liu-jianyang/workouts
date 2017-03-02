@@ -4,7 +4,8 @@ import {
   Response,
   ResponseOptions,
   RequestMethod,
-  XHRBackend
+  XHRBackend,
+  URLSearchParams
 } from '@angular/http';
 import {
   MockBackend,
@@ -21,22 +22,33 @@ export let fakeBackendProvider = {
   provide: Http,
   useFactory: (backend: MockBackend, options: BaseRequestOptions, realBackend: XHRBackend) => {
 
-    function realHttpGet(url, connection, isJson) {
+    //filter: { key: <>, value: <value searching for>, exactMatch: boolean}
+    function realHttpGet(url, connection, isJson, filter) {
       let httpRequest = new Http(realBackend, options);
       httpRequest.get(url)
-                 .map(res => {
-                   if (isJson) {
-                     return res.json();
-                   } else {
-                     return res['_body'];
-                   }
-                 })
-                 .subscribe(data => {
-                   connection.mockRespond(new Response(new ResponseOptions({
-                     status: 200,
-                     body: data
-                   })));
-                 });
+        .map(res => {
+          if (isJson) {
+            return res.json();
+          } else {
+            return res['_body'];
+          }
+        })
+        .subscribe(data => {
+          var body = data;
+          if (filter) {
+            body = data.filter(function (row) {
+              if (filter.exactMatch) {
+                return row[filter.key] = filter.value;
+              } else {
+                return row[filter.key].indexOf(filter.value) !== -1;
+              }
+            });
+          }
+          connection.mockRespond(new Response(new ResponseOptions({
+            status: 200,
+            body: body
+          })));
+        });
     }
 
     // array in local storage for registered users
@@ -47,7 +59,6 @@ export let fakeBackendProvider = {
       // wrap in timeout to simulate server api call
       setTimeout(() => {
         console.log('%s %s', getRequestMethod[connection.request.method], connection.request.url);
-
         // authenticate
         if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
           // get parameters from post request
@@ -170,15 +181,21 @@ export let fakeBackendProvider = {
 
         //exercises
         else if (connection.request.url.endsWith('/api/exercises') && connection.request.method === RequestMethod.Get) {
-          realHttpGet('app/mock/exercises.json', connection, true);
+          realHttpGet('app/mock/exercises.json', connection, true, undefined);
+        }
+
+        else if (connection.request.url.match(/\/api\/exercises/) && connection.request.method === RequestMethod.Get) {
+          let params = new URLSearchParams(connection.request.url.split('?')[1]);
+          let search = params.get('search');
+          realHttpGet('app/mock/exercises.json', connection, true, {key: 'name', value: search, exactMatch: false});
         }
 
         else if (connection.request.url.endsWith('/api/name-mapping') && connection.request.method === RequestMethod.Get) {
-          realHttpGet('app/mock/name-mapping.json', connection, true);
+          realHttpGet('app/mock/name-mapping.json', connection, true, undefined);
         }
 
         else if (connection.request.url.endsWith('CHANGELOG.md') && connection.request.method === RequestMethod.Get) {
-          realHttpGet('app/mock/CHANGELOG.md', connection, false);
+          realHttpGet('app/mock/CHANGELOG.md', connection, false, undefined);
         }
 
         // User specific information

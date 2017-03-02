@@ -1,6 +1,7 @@
 import { Injectable }     from '@angular/core';
-import { Http, Headers, RequestOptions, Response, Request } from '@angular/http';
+import { Http, Headers, RequestOptions, Response, Request, URLSearchParams } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
+import * as _ from 'underscore';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
@@ -90,7 +91,8 @@ export class ExercisesService {
   // hash of eid as key and completed as value
   private userExercises = {};
 
-  constructor (private http: Http) {}
+  constructor (
+    private http: Http) {}
 
   getExercises (): Observable<any[]> {
     let url = '/api/exercises';
@@ -113,6 +115,36 @@ export class ExercisesService {
   private extractData(res: Response) {
     let body = res.json();
     return body.info || '';
+  }
+
+  searchExercises(term: string, selectedExercises) {
+    if (term === '') {
+      return Observable.of([]);
+    }
+
+    let url = '/api/exercises';
+    let params = new URLSearchParams();
+    params.set('search', term);
+    params.set('action', 'opensearch');
+    params.set('format', 'json');
+    params.set('callback', 'JSONP_CALLBACK');
+
+    return this.http
+      .get(url, {search: params})
+      .map(response => {
+        let body = response.json();
+        if (selectedExercises.length > 0) {
+          for (let i = 0; i < selectedExercises.length; i++) {
+            for (let j = 0; j < body.length; j++) {
+              if (selectedExercises[i].eid === body[j].eid) {
+                body.splice(j, 1);
+                break;
+              }
+            }
+          }
+        }
+        return body;
+      });
   }
 
   setUserExercises(exercises): Observable<any[]> {
