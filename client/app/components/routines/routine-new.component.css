@@ -11,20 +11,30 @@ input {
   font-size: 1em;
   padding-left: .4em;
 }
-button {
-  margin-top: 20px;
-  font-family: Arial;
-  background-color: #eee;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer; cursor: hand;
-}
-button:hover {
+button:hover:not([disabled]) {
   background-color: #cfd8dc;
 }
 button:disabled {
   background-color: #eee;
   color: #ccc;
   cursor: auto;
+}
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.btn-exercise {
+  font-family: Arial;
+  background-color: #eee;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer; cursor: hand;
+}
+
+.label-exercise {
+  margin: 0;
 }

@@ -35,7 +35,6 @@ export class RoutinesService {
   }
 
   setRoutine(routine) {
-    console.log('setRoutine');
     return this.http.post('/api/user/routines', routine, this.jwt())
       .map((res: Response) => {
         this.loadRoutines();
